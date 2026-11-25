@@ -1,0 +1,33 @@
+# Local state, diagnostics and backups
+/backups/
+/runtime/
+/evidence/
+/private/
+/local/
+state.json
+state.previous.json
+state.lock
+desktop-mode.json
+desktop-mode.lock
+*.log
+*.pid
+.DS_Store
+__pycache__/
+*.py[cod]
+# Generated executables and build outputs
+/cyberdeck.widget/bin/stats
+/build/
+*.dSYM/
+.swift-module-cache/
+node_modules/
+# Credentials and local configuration
+.env
+.env.*
+*.pem
+*.key
+*.p12
+.netrc
+# Local screenshots and export packages
+/screenshots/
+/exports/
+*.zip

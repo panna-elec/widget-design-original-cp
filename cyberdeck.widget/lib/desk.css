@@ -1,0 +1,55 @@
+/* Original local utility drawer. Shares the telemetry position by default. */
+.hud [hidden]{display:none!important}.desk-panel[hidden]{display:none!important}
+.desk-panel{z-index:10}.desk-open .system-panel{visibility:hidden}
+.desk-panel .desk-scroll{overflow:auto;min-height:0;padding:5px 2px 12px;scrollbar-width:thin}
+.desk-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin:10px 0}
+.desk-tabs button{padding:5px 2px!important;font-size:10px!important}
+.desk-tabs button[aria-selected=true]{border-color:var(--accent);background:rgba(var(--accent-rgb),.14)}
+.desk-panel h3{font:600 12px Rajdhani,sans-serif;letter-spacing:1px;margin:12px 0 8px}
+.desk-panel label,.desk-panel p,.desk-panel small{font:10px/1.6 -apple-system,sans-serif;letter-spacing:0}
+.desk-panel label{display:block;margin:7px 0}.desk-panel p{color:var(--ink);margin:8px 0}
+.desk-panel input,.desk-panel select{box-sizing:border-box;width:100%;min-width:0;max-width:100%;font:11px -apple-system,sans-serif;color:var(--ink);background:#111521;border:1px solid #697080;padding:6px;min-height:30px;border-radius:0}
+.desk-panel input[type=checkbox]{width:auto;min-height:auto;vertical-align:middle;margin-right:6px}
+.desk-panel form{padding-top:8px;border-top:1px solid #68708055;margin-top:10px}
+.desk-panel .two-cols{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.desk-panel .desk-actions{display:flex;gap:4px;margin:8px 0;flex-wrap:wrap}
+.desk-actions button{flex:1}
+.desk-status{min-height:1.6em;overflow-wrap:anywhere;color:var(--accent)!important}
+.desk-list{list-style:none;margin:0;padding:0;max-height:200px;overflow:auto}
+.desk-list li{padding:8px 0;border-bottom:1px solid #69708044;overflow-wrap:anywhere}
+.desk-list .list-title{font:11px/1.5 -apple-system,sans-serif;white-space:pre-wrap;display:block;margin:0 0 5px}
+.desk-list .row-actions{display:flex;gap:4px}.desk-list .row-actions button{font-size:10px;min-height:24px;flex:1;padding:3px}
+.desk-list label{margin:0 0 5px}.desk-list .done-text{text-decoration:line-through;opacity:.55}
+.resource-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.resource{min-width:0;text-align:center;position:relative;padding:6px 0}
+.resource svg{width:76px;height:76px;display:block;margin:0 auto;transform:rotate(-90deg)}
+.resource circle{fill:none;stroke-width:5}.resource .track{stroke:#69708044}.resource .fill{stroke:var(--energy-color,var(--accent));stroke-dasharray:0 100;transition:stroke-dasharray .6s ease}
+.resource strong{display:block;margin-top:5px;font:600 16px Rajdhani,sans-serif}.resource small{display:block;font-size:9px}
+.resource .segbar{height:7px;margin:7px 0;background:#69708044;mask-image:repeating-linear-gradient(90deg,#000 0 6px,transparent 6px 8px)}
+.resource .segbar i{display:block;height:100%;background:var(--energy-color,var(--accent));width:0}
+.resource.changed{animation:desk-flash .7s ease-out}.task-finished{animation:desk-flash .6s ease-out}
+@keyframes desk-flash{25%{background:rgba(var(--accent-rgb),.22)}100%{background:transparent}}
+#surface[data-energy=mid],#ambient-surface[data-energy=mid]{--energy-color:#e9b968;--energy-rgb:233,185,104}
+#surface[data-energy=low],#ambient-surface[data-energy=low]{--energy-color:#ff756b;--energy-rgb:255,117,107}
+#surface[data-energy=charging],#ambient-surface[data-energy=charging]{--energy-color:#70dbd2;--energy-rgb:112,219,210}
+/* REFERENCE uses ::before for a full-size transparent outline.
+   Keep its gradients intact; energy color belongs on the narrow side marker. */
+#surface:not([data-style=reference])[data-energy=mid] .hud:before,#surface:not([data-style=reference])[data-energy=low] .hud:before,#surface:not([data-style=reference])[data-energy=charging] .hud:before{background:var(--energy-color)}
+#surface[data-style=reference][data-energy=mid] .hud:after,#surface[data-style=reference][data-energy=low] .hud:after,#surface[data-style=reference][data-energy=charging] .hud:after{background:var(--energy-color)}
+#surface[data-motion=normal][data-energy=low] .resource-battery{animation:energy-breathe 5s ease-in-out infinite}
+#surface[data-motion=normal][data-energy=charging] .resource-battery .segbar i{background:linear-gradient(90deg,#70dbd2,#eefefe,#70dbd2);background-size:200% 100%;animation:energy-flow 4s linear infinite}
+@keyframes energy-breathe{0%,100%{box-shadow:inset 0 0 0 1px #ff756b11}50%{box-shadow:inset 0 0 0 1px #ff756b99}}
+@keyframes energy-flow{to{background-position:200% 0}}
+#surface:not([data-motion=normal]) .resource,#surface:not([data-motion=normal]) .task-finished{animation:none!important}
+#surface:not([data-motion=normal]) .resource .fill{transition:none}
+.layout-grip{display:none;position:absolute;right:4px;bottom:4px;width:18px;height:18px;cursor:nwse-resize;z-index:40;border-right:2px solid var(--accent);border-bottom:2px solid var(--accent);touch-action:none}
+.layout-editing .layout-grip{display:block}.layout-editing .hud>.panel-top{cursor:move;touch-action:none;outline:1px dashed var(--accent);outline-offset:3px}
+.layout-guide{position:absolute;border:1px dashed #75dec155;pointer-events:none;z-index:0;display:none}.layout-editing .layout-guide{display:block}
+.layout-editing .hud{animation:none!important;transition:none!important}
+.layout-editing .hud.is-selected{box-shadow:inset 0 0 0 2px #75dec1!important}
+.desk-mini{font-size:9px!important;letter-spacing:0!important;padding:3px 5px!important}
+#surface[data-constrained=true] .clock-panel,#surface[data-constrained=true] .system-panel{max-width:calc(100% - 24px)}
+@media(prefers-reduced-motion:reduce){.resource,.task-finished,.resource .segbar i{animation:none!important}.resource .fill{transition:none!important}}
+
+.desk-focus .clock-panel{visibility:hidden}
+#surface[data-layout=left] .reference-dashboard{display:none}

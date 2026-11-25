@@ -1,0 +1,4 @@
+# Preserve third-party license texts verbatim, including upstream whitespace.
+cyberdeck.widget/lib/fonts/OFL-*.txt -text -whitespace
+*.png binary
+*.ttf binary

@@ -1,0 +1,32 @@
+/* Reference entrance: frame → heading decode → data, then fully still. */
+[data-style=reference] .hud,
+[data-style=reference] .hud::before,
+[data-style=reference] .boot-sweep{animation:none!important}
+[data-style=reference] .boot-sweep{opacity:0}
+.gauge-arc{stroke-dasharray:var(--arc-length,0) 290}
+[data-style=reference].assembling .hud{background:rgba(26,26,36,calc(.94 * var(--boot-face,1)))}
+[data-style=reference].assembling .hud::before{clip-path:var(--boot-frame,inset(0));transform:none}
+[data-style=reference].assembling .hud::after{opacity:var(--boot-title,1)}
+[data-style=reference].assembling .hud>.panel-top,
+[data-style=reference].assembling .hud .decode{opacity:var(--boot-title,1)}
+[data-style=reference].assembling .decode{transform:translateX(var(--boot-jitter,0px))}
+[data-style=reference].assembling .hud>:not(.panel-top):not(.decode):not(.boot-sweep){opacity:var(--boot-content,1)}
+[data-style=reference].assembling .meter i{transform:scaleX(var(--boot-meter,1));transform-origin:left;transition:none}
+[data-style=reference].assembling .gauge-arc{stroke-dasharray:calc(var(--arc-length,0) * var(--boot-meter,1)) 290;transition:none}
+[data-style=reference].assembling .boot-sweep{display:block;z-index:2;opacity:var(--boot-scan-opacity,0);transform:translateY(var(--boot-scan-y,-30px));background:linear-gradient(0deg,transparent,rgba(var(--accent-rgb),.12),transparent);pointer-events:none}
+[data-style=reference][data-boot-kind=gentle].assembling .boot-sweep{display:none}
+@media(prefers-reduced-motion:reduce){
+  [data-style=reference].assembling .hud{background:rgba(26,26,36,.94)}
+  [data-style=reference].assembling .hud::before{clip-path:none}
+  [data-style=reference].assembling .hud::after,
+  [data-style=reference].assembling .hud>:not(.boot-sweep){opacity:1}
+  [data-style=reference].assembling .decode,
+  [data-style=reference].assembling .meter i{transform:none}
+  [data-style=reference].assembling .boot-sweep{display:none}
+}
+
+/* Nested interactive panel bodies retain the staged heading/data entrance. */
+[data-style=reference].assembling .hud>.panel-body{opacity:1}
+[data-style=reference].assembling .body-content>.decode{opacity:var(--boot-title,1)}
+[data-style=reference].assembling .body-content>:not(.decode){opacity:var(--boot-content,1)}
+@media(prefers-reduced-motion:reduce){[data-style=reference].assembling .body-content>*{opacity:1!important}}

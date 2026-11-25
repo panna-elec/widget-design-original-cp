@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cyberdeck surface</title><link rel="stylesheet" href="surface.css"><link rel="stylesheet" href="assembly.css"><link rel="stylesheet" href="interactive.css?v=readable-footer-2"><link rel="stylesheet" href="signal-effects.css"><link rel="stylesheet" href="ambient.css?v=koi-size-1"><link rel="stylesheet" href="desk.css?v=charging-outline-1"></head>
+<body><main id="surface" data-palette="cyan" data-layout="split" data-motion="normal">
+  <div class="scene-overlay preview-only" aria-hidden="true"><span>CD / 02</span><span>DESKTOP INTERFACE</span><span>▰ ▰ ▰</span></div>
+  <div class="wallpaper" aria-hidden="true"></div>
+  <div class="desktop-menu preview-only"><span>◈ &nbsp; Finder <small>ファイル　編集　表示　移動</small></span><span id="menu-time"></span></div>
+  <div class="desktop-label preview-only"><div class="clean-title"><span>DESKTOP STUDY / 01</span><strong>Quiet systems.<br>Clear space.</strong><p>中央は、いつもの作業のために。</p></div><div class="cyber-title"><span>PERSONAL TERMINAL / 02</span><strong>NIGHT<br><b>PROTOCOL_</b></strong><p>YOUR SPACE. YOUR SIGNAL.</p><i aria-hidden="true"></i></div></div>
+  <section class="hud clock-panel" aria-label="時計">
+    <span class="boot-sweep" aria-hidden="true"></span><div class="panel-top"><span class="eyebrow">01 / LOCAL TIME</span><button id="clock-collapse" class="collapse-control" aria-label="時計を折りたたむ" aria-expanded="true" aria-controls="clock-body">−</button></div>
+    <div class="panel-body" id="clock-body"><div class="body-content">
+    <h2 class="decode" aria-label="CHRONO" data-title="CHRONO">CHRONO</h2>
+    <div class="time"><span id="hours">00</span><span class="colon">:</span><span id="minutes">00</span><small id="seconds">00</small></div>
+    <div class="clock-bottom"><span id="date"></span><span id="weekday"></span></div>
+    <div class="control-row"><button id="calendar-toggle" aria-controls="clock-extra" aria-expanded="false">カレンダー</button><button id="desk-open" disabled class="desk-mini" aria-expanded="false">デスク</button></div><div id="clock-extra" class="detail-slot"><div class="detail-content"><div class="reference-calendar"><div id="calendar-month"></div><div class="calendar-days" id="calendar"></div></div></div></div><div class="rule"></div><div class="panel-footer"><span id="timezone">LOCAL</span><span>LOCAL CLOCK</span></div></div></div>
+  </section>
+  <section class="hud system-panel" aria-label="システム情報">
+    <span class="boot-sweep" aria-hidden="true"></span><div class="panel-top"><span class="eyebrow">02 / TELEMETRY</span><span class="header-actions"><span class="source" id="source">DEMO</span><button id="system-collapse" class="collapse-control" aria-label="システムを折りたたむ" aria-expanded="true" aria-controls="system-body">−</button></span></div>
+    <div class="panel-body" id="system-body"><div class="body-content">
+    <h2 class="decode" aria-label="SYSTEM" data-title="SYSTEM">SYSTEM</h2>
+    <div class="metric"><div><span class="metric-name">CPU</span><small>全コアの平均</small></div><strong><span id="cpu">—</span><em>%</em></strong></div>
+    <div class="meter"><i id="cpu-meter"></i></div>
+
+    <div class="rule"></div>
+    <div class="metric"><div><span class="metric-name">MEMORY</span><small>Active + Wired + Compressed</small></div><strong><span id="memory">—</span><em>%</em></strong></div>
+    <div class="meter segmented"><i id="memory-meter"></i></div>
+    <div class="panel-footer"><span id="memory-detail">測定待ち</span><span>GiB</span></div>
+    <div class="status-line"><span class="dot"></span><span id="status" role="status">サンプル表示</span></div>
+    <div class="control-row"><button id="details-toggle" aria-controls="system-extra" aria-expanded="false">詳細 / 履歴</button></div>
+
+    <section class="network-card" aria-label="通信速度計">
+      <div class="network-heading"><strong>NETWORK / I/O</strong><small>5秒平均</small></div>
+      <div class="network-row"><span>↓ RX / 受信</span><strong id="network-rx">—</strong></div>
+      <div class="network-meter"><i id="network-rx-meter"></i></div>
+      <div class="network-row"><span>↑ TX / 送信</span><strong id="network-tx">—</strong></div>
+      <div class="network-meter tx"><i id="network-tx-meter"></i></div>
+      <small id="network-state">計測待ち</small>
+      <small id="network-scale">目盛りは通信量に合わせて自動調整</small>
+    </section>
+    <div id="system-extra" class="detail-slot"><div class="detail-content"><p class="detail-caption">CPU HISTORY / 約3分</p><svg class="graph" viewBox="0 0 240 54" aria-label="CPU使用率の推移"><path class="grid" d="M0 12H240M0 32H240M0 52H240"/><polyline id="cpu-graph" points=""/></svg><p class="detail-caption">NETWORK HISTORY / 約3分</p><svg class="graph network-graph" viewBox="0 0 240 54" aria-label="受信は赤、送信は白の通信速度履歴"><path class="grid" d="M0 12H240M0 32H240M0 52H240"/><polyline id="network-rx-graph" points=""/><polyline id="network-tx-graph" points=""/></svg><p class="detail-copy">通信はWi-Fi・Ethernet（en系）の合計。LAN内通信を含みます。赤は受信、白は送信。目盛りは自動調整で、回線の使用率ではありません。KiB/sは1024バイト/秒です。</p><p class="detail-copy">CPUは全コアの平均。メモリはActive＋Wired＋Compressedの概算です。5秒ごとに更新します。</p></div></div>
+    </div></div>
+  </section>
+  <section class="hud desk-panel" aria-label="デスクツール" hidden>
+    <div class="panel-top"><span class="eyebrow">03 / DESK TOOLS</span><span class="header-actions"><button id="desk-fold" aria-label="収納パネルを折りたたむ" aria-expanded="true">−</button><button id="desk-close" aria-label="収納してシステム表示へ戻る">×</button></span></div>
+    <div class="desk-tabs" role="tablist" aria-label="デスクツールの項目">
+      <button role="tab" data-desk-tab="resources" aria-selected="true">SSD・電源</button><button role="tab" data-desk-tab="links" aria-selected="false">リンク</button><button role="tab" data-desk-tab="tasks" aria-selected="false">タスク</button>
+      <button role="tab" data-desk-tab="layout" aria-selected="false">配置</button><button role="tab" data-desk-tab="effects" aria-selected="false">演出連動</button>
+    </div>
+    <div class="desk-scroll">
+      <div data-desk-page="resources">
+        <div class="resource-grid">
+          <div class="resource" id="disk-card"><small>SSD / 空き</small><svg viewBox="0 0 44 44" aria-hidden="true"><circle class="track" cx="22" cy="22" r="18"/><circle class="fill" id="disk-arc" cx="22" cy="22" r="18" pathLength="100"/></svg><strong id="disk-percent">—</strong><div class="segbar"><i id="disk-bar"></i></div><small id="disk-detail">取得待ち</small></div>
+          <div class="resource resource-battery" id="battery-card"><small>POWER / 残量</small><svg viewBox="0 0 44 44" aria-hidden="true"><circle class="track" cx="22" cy="22" r="18"/><circle class="fill" id="battery-arc" cx="22" cy="22" r="18" pathLength="100"/></svg><strong id="battery-percent">—</strong><div class="segbar"><i id="battery-bar"></i></div><small id="battery-detail">取得待ち</small></div>
+        </div><p id="resource-source">DEMO</p><p>SSDはホームがあるAPFS領域の空き。共有領域を含み、解放可能容量は含みません。</p><p>残量が減っても通常演出を自動で弱めません。色と光の変化は「演出連動」で調整できます。</p>
+      </div>
+      <div data-desk-page="links" hidden><h3>QUICK ACCESS</h3><ul id="shortcut-list" class="desk-list"></ul>
+        <form id="shortcut-form"><label>表示名<input id="shortcut-label" maxlength="40" required></label><label>種類<select id="shortcut-kind"><option value="app">アプリ</option><option value="folder">フォルダー</option></select></label><label>パス<input id="shortcut-path" placeholder="/Applications/アプリ名.app または ~/Documents" maxlength="2048" required></label><div class="desk-actions"><button type="submit" id="shortcut-submit">登録</button><button type="button" id="shortcut-cancel">取消</button></div><p>アプリまたはフォルダーのパスを入力。最大24件。ファイルやコマンドは実行しません。</p></form>
+      </div>
+      <div data-desk-page="tasks" hidden><h3>MISSION LOG <span id="task-count"></span></h3><ul id="task-list" class="desk-list"></ul><form id="task-form"><label>タスク<input id="task-text" maxlength="200" required placeholder="次にやること"></label><div class="desk-actions"><button type="submit" id="task-submit">追加</button><button type="button" id="task-cancel">取消</button></div></form><button id="task-undo" hidden>削除を元に戻す</button><p>このMacに保存します。最大100件。OFFにしても消えません。</p></div>
+      <div data-desk-page="layout" hidden><p>「編集開始」後、見出しをドラッグして移動。右下の角でサイズ変更。数値でも調整できます。</p><div class="desk-actions"><button id="layout-start">編集開始</button><button id="layout-cancel">取消</button></div><label>対象<select id="layout-target"><option value="clock">時計</option><option value="system">システム</option><option value="desk">収納パネル</option></select></label><div class="two-cols"><label>X<input id="layout-x" type="number" step="1"></label><label>Y<input id="layout-y" type="number" step="1"></label><label>幅<input id="layout-w" type="number" min="224" step="1"></label><label>高さ<input id="layout-h" type="number" min="120" step="1"></label></div><div class="desk-actions"><button id="layout-apply">位置を試す</button><button id="layout-save">配置保存・終了</button></div><button id="layout-reset">この画面の初期配置へ戻す</button><p>画面寸法・デザイン別に保存。10px単位の位置合わせとパネル同士の重なり確認。アイコンの位置は目視で避けてください。上部バナーは固定です。</p></div>
+      <div data-desk-page="effects" hidden><h3>壁紙の鑑賞モード</h3><p id="desktop-visibility">アイコン表示を確認中</p><div class="desk-actions"><button id="view-hide" type="button">アイコンを隠す</button><button id="view-restore" type="button">元の表示へ戻す</button></div><p>Finderを再読み込みします。ファイルはそのまま残り、Finderのデスクトップフォルダーから開けます。表示OFF時にも元へ戻します。</p><form id="effects-form"><label><input type="checkbox" id="battery-effects">残量・充電に演出を連動</label><label><input type="checkbox" id="koi-enabled">中央の鯉の光を表示</label><label>鯉の色<select id="koi-palette"><option value="rose">ダークローズ（標準）</option><option value="wine">ワインレッド</option><option value="crimson">クリムゾン</option><option value="mauve">くすみモーヴ</option><option value="coral">ダスティコーラル</option><option value="cyan">シアン × ピンク</option></select></label><label>鯉の大きさ<select id="koi-size"><option value="100">従来（100%）</option><option value="115">少し大きい（115%）</option><option value="130">大きい（130%）</option></select></label><label>光の線の太さ<select id="koi-weight"><option value="100">従来（100%）</option><option value="130">少し太い（130%）</option><option value="160">太い（160%）</option></select></label><small>輪郭・光・残光をまとめて調整。両方「従来」で以前の見た目に戻せます。</small><label><input type="checkbox" id="koi-power">鯉も残量に合わせて色を変える</label><small>オフなら選んだ色を保ちます。変更後は「設定を保存」。</small><label><input type="checkbox" id="particles-enabled">少量の粒子を表示</label><div class="two-cols"><label>少ない残量（%）<input id="energy-low" type="number" min="5" max="40"></label><label>中程度（%）<input id="energy-mid" type="number" min="10" max="90"></label></div><label>Dockを避ける位置<select id="desk-dock"><option value="auto">自動（推定）</option><option value="bottom">下</option><option value="left">左</option><option value="right">右</option></select></label><label>手動時の余白（px）<input id="dock-reserve" type="number" min="24" max="200"></label><button type="submit">設定を保存</button></form><p>通常は本来の配色、中程度は琥珀色、少ない残量は赤系、充電中は青緑の流れ。鯉は輪郭に沿う光で描きます。控えめ・オフ・動きを減らす設定では背景の光と鯉を非表示にします。</p><div id="demo-power-note" hidden><label>仮の電池残量<input id="demo-battery" type="range" min="0" max="100" value="67"></label><label><input id="demo-charging" type="checkbox">仮の充電状態</label><p>プレビューは仮データです。</p></div></div>
+    </div><p id="desk-status" class="desk-status" role="status"></p>
+  </section>
+  <section class="reference-dashboard hud" aria-label="システム概要">
+    <span class="boot-sweep" aria-hidden="true"></span>
+    <div class="panel-top"><span class="eyebrow">03 / SYSTEM OVERVIEW</span><span class="reference-tag" id="overview-source">DEMO</span></div>
+    <div class="overview-gauges">
+      <div class="gauge"><div class="gauge-heading">CPU <span>// LOAD</span></div><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="gauge-track" cx="60" cy="60" r="46"/><circle class="gauge-arc" id="cpu-ring" cx="60" cy="60" r="46"/></svg><div class="gauge-value"><b id="overview-cpu">—</b><small>% CPU</small></div></div>
+      <div class="gauge"><div class="gauge-heading">MEMORY <span>// RAM</span></div><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="gauge-track" cx="60" cy="60" r="46"/><circle class="gauge-arc memory-arc" id="mem-ring" cx="60" cy="60" r="46"/></svg><div class="gauge-value"><b id="overview-mem">—</b><small>% RAM</small></div></div>
+    </div>
+    <div class="overview-table"><div><span>UPDATE INTERVAL</span><b>5 s</b></div><div><span>PHYSICAL MEMORY</span><b id="overview-total">—</b></div><div><span>DISPLAY MODE</span><b id="overview-mode">PREVIEW</b></div></div>
+    <div class="reference-bottom"><span>CPU / RAM / CLOCK</span><span>READ ONLY</span></div>
+  </section>
+  <div class="finder preview-only" hidden><div class="finder-title"><span class="lights"><i></i><i></i><i></i></span><b>Finder — 配置確認用</b></div><div class="finder-body"><aside>よく使う項目<br><br>最近の項目<br><br>アプリケーション<br><br>デスクトップ</aside><div><span>▰<small>Documents</small></span><span>▰<small>Pictures</small></span><span>▰<small>Projects</small></span><p>通常のアプリの見た目はそのまま</p></div></div></div>
+  <div class="dock preview-only" aria-hidden="true"><i>⌘</i><i>◉</i><i>✉</i><i>▤</i><i>♫</i><i>⚙</i></div>
+</main><script src="boot-sequence.js"></script><script src="surface.js"></script><script src="interactions.js?v=pointer-1"></script><script src="signal-effects.js?v=tools-2"></script><script type="module" src="ambient.js?v=koi-size-1"></script><script type="module" src="desk.js?v=koi-size-1"></script></body></html>

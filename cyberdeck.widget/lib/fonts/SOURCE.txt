@@ -1,0 +1,9 @@
+Downloaded 2026-11-25 from google/fonts (official Google Fonts repository).
+Rajdhani Medium and SemiBold:
+https://github.com/google/fonts/tree/main/ofl/rajdhani
+Orbitron variable:
+https://github.com/google/fonts/tree/main/ofl/orbitron
+Original TTF files, no conversion or modification.
+OFL-Rajdhani.txt and OFL-Orbitron.txt preserve original copyright and SIL OFL 1.1 license text.
+Chosen to match the typeface families credited by CyberKDE:
+https://github.com/jrcn1991/theme-cyberkde/blob/main/CREDITS.md

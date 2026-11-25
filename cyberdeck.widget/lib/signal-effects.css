@@ -1,0 +1,26 @@
+/* Original styling; no vendor CSS, fonts, images or audio imported from MyPage. */
+.hud .decode{position:relative}
+.hud .decode.signal-heading-active{color:transparent!important;text-shadow:none}
+.hud .decode.signal-heading-active::after{content:attr(data-signal-text);position:absolute;inset:0;color:var(--ink);text-shadow:1px 0 rgba(var(--accent-rgb),.75),-1px 0 #dcdce440;pointer-events:none;white-space:nowrap}
+.hud .signal-button{position:relative;overflow:hidden;background-image:linear-gradient(var(--accent),var(--accent));background-position:left bottom;background-repeat:no-repeat;background-size:0 1px;transition:background-size .26s ease-out}
+.hud .signal-button:focus-visible,.hud .signal-button[aria-expanded=true]:not(.collapse-control){background-size:100% 1px}
+@media(hover:hover){.hud .signal-button:hover{background-size:100% 1px}}
+.signal-button::before,.signal-button::after{content:'';position:absolute;pointer-events:none;left:3px;right:3px;height:2px;opacity:0;background:var(--accent)}
+.signal-button::before{top:24%}.signal-button::after{bottom:22%;background:var(--ink)}
+.signal-button-active::before{opacity:var(--signal-opacity,0);transform:translateX(var(--signal-shift,0px))}
+.signal-button-active::after{opacity:calc(var(--signal-opacity,0) * .55);transform:translateX(calc(var(--signal-shift,0px) * -1))}
+.signal-strip{display:block;position:absolute;left:0;top:40px;width:45%;height:1px;opacity:0;pointer-events:none;background:linear-gradient(90deg,transparent,var(--accent),var(--ink),transparent);z-index:3}
+.signal-lamp{display:block;position:absolute;left:18px;top:1px;width:42px;height:2px;background:var(--accent);box-shadow:0 0 5px rgba(var(--accent-rgb),.4);opacity:.12;pointer-events:none;z-index:3}
+/* Keep the animated light separate from CYBER/CLEAN's permanently lit top edge. */
+[data-style=cyber] .signal-lamp{left:20px;top:8px;width:56px;height:3px;background:var(--secondary);box-shadow:0 0 8px var(--secondary)}
+[data-style=cyber] .signal-strip{top:64px;background:linear-gradient(90deg,transparent,var(--secondary),var(--accent),transparent)}
+[data-style=cyber] .decode.signal-heading-active::after{left:10px;text-shadow:2px 0 var(--secondary),-1px 0 rgba(var(--accent-rgb),.6)}
+[data-style=clean] .signal-lamp{top:7px;width:36px;box-shadow:0 0 4px rgba(var(--accent-rgb),.4)}
+[data-style=clean] .signal-strip{top:54px}
+[data-style=clean] .decode.signal-heading-active::after{text-shadow:1px 0 rgba(var(--accent-rgb),.6)}
+@media(max-width:620px){[data-style=cyber] .decode.signal-heading-active::after{left:6px}}
+#surface:not([data-motion=normal]) .signal-lamp{opacity:.12!important;box-shadow:none}
+@media(prefers-reduced-motion:reduce){.signal-lamp{opacity:.12!important;box-shadow:none!important}}
+#surface[data-motion=gentle] .signal-button,#surface[data-motion=off] .signal-button,#surface[data-motion=paused] .signal-button{transition:none}
+#surface:not([data-motion=normal]) .signal-strip,#surface:not([data-motion=normal]) .signal-button::before,#surface:not([data-motion=normal]) .signal-button::after{display:none}
+@media(prefers-reduced-motion:reduce){.signal-strip,.signal-button::before,.signal-button::after{display:none!important}.hud .signal-button{transition:none!important}.hud .decode.signal-heading-active{color:var(--ink)!important}.signal-heading-active::after{display:none!important}}

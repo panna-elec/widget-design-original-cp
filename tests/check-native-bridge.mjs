@@ -1,0 +1,17 @@
+import {createPointerRouter} from '../cyberdeck.widget/lib/native-pointer.js';
+import fs from 'node:fs';import vm from 'node:vm';import assert from 'node:assert/strict';
+const source=fs.readFileSync(new URL('../cyberdeck.widget/index.jsx',import.meta.url),'utf8').split('export const render')[0].replace(/^import .*;\n/gm,'').replaceAll('export const ','const ');
+const listeners={},sent=[],hover=[];const origin='http://127.0.0.1:41416';const target={postMessage:m=>sent.push(m)};const frame={contentWindow:target,isConnected:true,style:{},getBoundingClientRect:()=>({left:0,top:0})};
+const context={createPointerRouter,window:{setTimeout:f=>f(),clearTimeout(){},document:{documentElement:{addEventListener(){},removeEventListener(){}}},location:{origin},addEventListener:(k,f)=>listeners[k]=f,removeEventListener:()=>{},webkit:{messageHandlers:{uebersicht:{postMessage:x=>hover.push(x)}}}},localStorage:{setItem:()=>{}},energyKey:()=>'',regionKey:()=>'',preferences:{motion:'normal'},run:()=>Promise.resolve('{}'),reduceSample:()=>{},Date,console};context.createPointerRouter=f=>createPointerRouter(f,context.window);vm.createContext(context);vm.runInContext(source,context);
+context.frame=frame;context.state={data:{battery:{percent:73}},error:false};vm.runInContext('send(frame,state)',context);sent.length=0;
+const message=(data,source=target,msgOrigin=origin)=>listeners.message({source,origin:msgOrigin,data:{channel:'cyberdeck',...data}});
+message({type:'desk-ready'});assert.equal(sent.length,2);assert.equal(sent[1].data.battery.percent,73);
+message({type:'hit-regions',regions:[{x:26,y:79,width:224,height:256}]});hover.length=0;
+message({type:'widget-hover',inside:true,x:50,y:100});message({type:'widget-hover',inside:false});assert.deepEqual(hover,['widgetEnter','widgetLeave']);
+message({type:'widget-hover',inside:true},{},origin);message({type:'widget-hover',inside:true},target,'https://other.invalid');message({type:'widget-hover',inside:'true'});assert.equal(hover.length,2);
+message({type:'hit-regions',regions:[{x:26,y:79,width:224,height:256}]});assert.match(frame.style.clipPath,/M 26 91/);
+message({type:'layout-editing',active:true});assert.match(frame.style.clipPath,/M 26 91/);
+message({type:'layout-drag',active:true,x:50,y:100});assert.equal(frame.style.clipPath,'none');
+message({type:'layout-drag',active:false});assert.match(frame.style.clipPath,/M 26 91/);message({type:'layout-editing',active:false});assert.match(frame.style.clipPath,/M 26 91/);
+context.state={data:{error:true},error:false};vm.runInContext('send(frame,state)',context);assert.equal(sent.at(-1).data.error,true);
+console.log('Native iframe handshake, mouse forwarding, origin rejection, hit regions: PASS');

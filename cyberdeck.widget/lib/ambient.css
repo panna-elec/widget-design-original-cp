@@ -1,0 +1,55 @@
+/* Original light overlay; the wallpaper and desktop remain separate. */
+.ambient-layer{position:absolute;inset:0;overflow:hidden;pointer-events:none!important;z-index:-1;--ambient-left:#6cfaff;--ambient-right:#ff668f}
+.ambient-layer svg{display:block;width:100%;height:100%;overflow:hidden;pointer-events:none}
+.ambient-layer[data-style="clean"]{--ambient-left:#8df6df;--ambient-right:#ef8ba5}
+.ambient-layer[data-style="reference"]{--ambient-left:#ff655e;--ambient-right:#e4e3ec}
+.ambient-layer[data-palette="quiet"]{--ambient-left:#cddce2;--ambient-right:#e5dce1}
+.ambient-left{fill:var(--ambient-left)}.ambient-right{fill:var(--ambient-right)}
+.ambient-window{opacity:.03;animation:ambient-window var(--duration,12s) ease-in-out var(--delay,0s) infinite}
+.ambient-trace{fill:none;stroke:var(--ambient-left);stroke-width:3;stroke-linecap:round;stroke-dasharray:70 930;opacity:.55;animation:ambient-travel var(--duration,16s) steps(var(--travel-steps,420),end) var(--delay,0s) infinite}
+.ambient-trace.ambient-right{stroke:var(--ambient-right)}
+.ambient-layer[data-style="clean"] .ambient-trace{opacity:.32;stroke-width:2}
+.ambient-layer[data-style="reference"] .ambient-trace{opacity:.6;stroke-width:2}
+.ambient-layer[data-state="paused"] *{animation-play-state:paused!important}
+.ambient-layer[data-state="off"],.ambient-layer[data-ready="false"]{visibility:hidden}
+.ambient-layer[data-state="off"] *{animation:none!important}
+@keyframes ambient-window{0%,22%,70%,100%{opacity:.025}38%,52%{opacity:.68}}
+@keyframes ambient-travel{from{stroke-dashoffset:1000}to{stroke-dashoffset:0}}
+@media(prefers-reduced-motion:reduce){.ambient-layer{visibility:hidden!important}.ambient-layer *{animation:none!important}}
+
+/* Residual-charge accents never select a weaker motion mode. */
+.ambient-layer[data-energy=mid]{--ambient-left:#e9b968;--ambient-right:#efce93}
+.ambient-layer[data-energy=low]{--ambient-left:#ff756b;--ambient-right:#f6aaa1}
+.ambient-layer[data-energy=charging]{--ambient-left:#70dbd2;--ambient-right:#d3fdfa}
+.ambient-layer[data-energy=charging] .ambient-trace{animation-direction:reverse}
+.ambient-particle{opacity:0;transform-box:fill-box;transform-origin:center;animation:ambient-drift var(--particle-duration,24s) linear var(--particle-delay,0s) infinite;will-change:transform,opacity}
+.ambient-layer[data-particles=false] .ambient-particle{display:none;animation:none}
+@keyframes ambient-drift{0%,100%{opacity:0;transform:translate(0,30px)}20%,70%{opacity:.25}90%{opacity:0;transform:translate(16px,-55px)}}
+
+.ambient-layer[data-state=off] .ambient-particle{will-change:auto}
+
+/* Koi: dark unfilled contour, short moving light and a fading wake. */
+.koi-art{--koi-weight:1;--koi-cyan:#ce5a7a;--koi-pink:#a43c68;fill:none;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.koi-cyan{--koi-color:var(--koi-cyan)}.koi-pink{--koi-color:var(--koi-pink)}
+.koi-guide{stroke:var(--koi-color);stroke-width:calc(1.5px * var(--koi-weight));opacity:.30}
+.koi-ray{stroke:var(--koi-cyan);stroke-width:calc(1.05px * var(--koi-weight));opacity:.19}
+.koi-eye{stroke:var(--koi-pink);stroke-width:calc(1.3px * var(--koi-weight));opacity:.42}
+.koi-flow{stroke:var(--koi-color);animation:koi-current var(--koi-duration,24s) steps(var(--koi-steps,720),end) var(--koi-delay,-7s) infinite}
+.koi-wake{stroke-width:calc(6.5px * var(--koi-weight));stroke-dasharray:100 900;opacity:.1}
+.koi-trail{stroke-width:calc(3px * var(--koi-weight));stroke-dasharray:55 945;opacity:.45}
+.koi-head{stroke-width:calc(3.8px * var(--koi-weight));stroke-dasharray:18 982;opacity:1}
+@keyframes koi-current{from{stroke-dashoffset:1000}to{stroke-dashoffset:0}}
+.ambient-layer[data-koi=false] .koi-art{display:none}
+.ambient-layer[data-koi=false] .koi-flow{animation:none}
+ .ambient-layer[data-koi-palette=wine] .koi-art{--koi-cyan:#b54b70;--koi-pink:#843451}
+.ambient-layer[data-koi-palette=crimson] .koi-art{--koi-cyan:#db5268;--koi-pink:#9e3559}
+.ambient-layer[data-koi-palette=mauve] .koi-art{--koi-cyan:#b86b9d;--koi-pink:#80558d}
+.ambient-layer[data-koi-palette=coral] .koi-art{--koi-cyan:#db7888;--koi-pink:#a55c77}
+.ambient-layer[data-koi-palette=cyan] .koi-art{--koi-cyan:#35e2f2;--koi-pink:#ec5791}
+.ambient-layer[data-koi-power=true][data-energy=mid] .koi-art{--koi-cyan:#dfb66c;--koi-pink:#d08761}
+.ambient-layer[data-koi-power=true][data-energy=low] .koi-art{--koi-cyan:#f07772;--koi-pink:#ce4666}
+.ambient-layer[data-koi-power=true][data-energy=charging] .koi-art{--koi-cyan:#62ded5;--koi-pink:#7cb9e6}
+
+/* Independent of overall scale; 100 preserves every original stroke width. */
+.ambient-layer[data-koi-weight="130"] .koi-art{--koi-weight:1.3}
+.ambient-layer[data-koi-weight="160"] .koi-art{--koi-weight:1.6}
