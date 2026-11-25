@@ -2,6 +2,12 @@
 
 **暗いデスクトップに、赤いフレームと輪郭を流れる鯉の光。macOS向けの時計・システム情報・デスクツールをまとめたデザイン制作です。**
 
+<p>
+  <img src="docs/media/overview.jpg" width="960" alt="REFERENCEデザインの全体像。左に時計・システム情報、中央に赤い光で描いた鯉" />
+</p>
+
+*実装を動かして撮影したプレビューです。CPU・メモリ・通信などは仮データで、個人のファイルやタスクは使用していません。*
+
 管理名義は **panna-elec**。GitHubでの保存先は [widget-design-original-cp](https://github.com/panna-elec/widget-design-original-cp)、可視性は **Private** です。
 
 [使い始める](SETUP.md) · [技術スタック](#技術スタック) · [構成](#構成) · [検証](VALIDATION.md) · [参考元・権利](RIGHTS_AND_LICENSES.md) · [アップロード前の情報確認](docs/PRIVACY_CHECK.md)
@@ -22,7 +28,43 @@
 
 REFERENCEは[CyberKDE](https://github.com/jrcn1991/theme-cyberkde)の画面・配色・演出を参考にしたMac用の試作です。制作記録上、参考元のコード・画像は同梱していません。鯉の参照画像を含めた出所は[権利記録](RIGHTS_AND_LICENSES.md)に記載しています。
 
+## 画面と動き
+
+### 鯉の光とデスクトップ全体
+
+鯉の輪郭に沿って短い光と残光が流れ、見出しや外周にも小さな演出が入ります。下は約9秒のループです。REFERENCE／クリムゾン／大きさ115%／線幅130%で撮影しています。
+
+![鯉の光と見出し・外周のアニメーション](docs/media/koi-animation.gif)
+
+### カレンダーとデスクの操作
+
+カレンダーを開閉し、「デスク」の演出連動を開き、鯉を大きく・太くして保存し、元の表示へ戻す流れです。操作待ちの間は一部短縮しています。
+
+![カレンダー、デスクツール、鯉の設定変更を行う操作例](docs/media/panel-controls.gif)
+
+<details>
+<summary>鯉の大きさ・線幅の設定画面を見る</summary>
+
+![鯉の大きさ130%・光の線の太さ160%を選択した設定画面](docs/media/koi-settings.jpg)
+
+「デスク」→「演出連動」で配色・大きさ・線幅を別々に選び、「設定を保存」で反映します。従来の100%設定にも戻せます。
+
+</details>
+
+GIFは説明用に解像度・フレーム数を抑えています。実際の滑らかさは[ローカルプレビュー](SETUP.md#プレビュー)で確認できます。プレビュー内のDock・メニューバーは見本であり、実機のアイコンを置き換える機能ではありません。[撮影条件と出所](docs/media/README.md)
+
 ## 技術スタック
+
+<p>
+<img src="docs/technical/stack-icons/html5.svg" width="36" height="36" alt="HTML" /> HTML &nbsp;
+<img src="docs/technical/stack-icons/css3.svg" width="36" height="36" alt="CSS" /> CSS &nbsp;
+<img src="docs/technical/stack-icons/javascript.svg" width="36" height="36" alt="JavaScript" /> JavaScript &nbsp;
+<img src="docs/technical/stack-icons/swift.svg" width="36" height="36" alt="Swift" /> Swift &nbsp;
+<img src="docs/technical/stack-icons/python.svg" width="36" height="36" alt="Python" /> Python &nbsp;
+<img src="docs/technical/stack-icons/nodejs.svg" width="36" height="36" alt="Node.js" /> Node.js
+</p>
+
+アイコンは[DeviconのSVGとMITライセンス](docs/technical/stack-icons/README.md)を同梱しています。各技術の役割は以下のとおりです。
 
 | 技術 | 担当すること | 実行場所 |
 | --- | --- | --- |

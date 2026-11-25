@@ -2,3 +2,5 @@
 cyberdeck.widget/lib/fonts/OFL-*.txt -text -whitespace
 *.png binary
 *.ttf binary
+*.jpg binary
+*.gif binary

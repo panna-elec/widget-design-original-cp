@@ -11,6 +11,12 @@
 
 [Google Fonts](https://github.com/google/fonts)から取得したTTFを未改変で保持しています。[SOURCE.txt](cyberdeck.widget/lib/fonts/SOURCE.txt)に取得元と取得日があります。著作権表示・OFL原文を削除しません。日本語のシステムフォント本体は同梱しません。
 
+## READMEの技術アイコン
+
+[Devicon](https://github.com/devicons/devicon)のHTML/CSS/JavaScript/Swift/Python/Node.jsのSVGを、形状・色を変えず同梱しています。配布条件はMIT、Copyright (c) 2015 konpa。[ライセンス原文](docs/technical/stack-icons/LICENSE)と[固定コミット・個別出典](docs/technical/stack-icons/README.md)を保持します。使用技術の識別のみが目的です。
+
+DeviconのMITは各ブランドの商標権を付与するものではありません。Swift and the Swift logo are trademarks of Apple Inc. プロジェクト全体への一括ライセンス付与は行いません。
+
 ## デザイン・実装の参照元
 
 | 参照元 | 参考にした内容・扱い | 上流の権利情報 |
@@ -39,3 +45,8 @@ CyberKDEのコード・素材の区別と上記実行ホストのLICENSEは2026-
 - フォントの原文は要約で置き換えません。
 - 別の素材・上流コードを導入する際は、利用条件・改変箇所・表示義務を個別に確認します。
 - Publicへの変更や第三者配布の前に、採用素材・参考表現・商標・ライセンス適用範囲を再確認します。
+
+
+## READMEの画面キャプチャ
+
+[docs/media](docs/media/README.md)のJPEG・GIFは、この実装のプレビューを撮影した説明用媒体。既存の壁紙・鯉の参考表現・同梱フォントを含み、これらの権利条件・未確認事項を引き継ぐ。画像生成で作ったUIやユーザーの実デスクトップ画面は含めていない。
