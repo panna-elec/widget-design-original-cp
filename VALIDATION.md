@@ -101,3 +101,8 @@ swiftc -O native/Stats.swift -o cyberdeck.widget/bin/stats
 ## Language, connection types and English media refresh (2026-11-27)
 
 最新版の英語プレビューを1440×1080で収録。Calendar、English選択状態、Effectsの保存、Wi-Fiと方式別通信量の表示を確認。最終GIFは1080×810、45フレーム9.08秒と83フレーム17.40秒。数値・接続方式は仮データであり、実機のハードウェア切替確認とは区別する。Python 15テスト、JavaScriptの計測・通信・分類・モデル・リソース・ネイティブ接続チェックが再実行で成功。以前の「GitHub送信なし」は各検証時点の記録。機能変更と更新媒体は、ユーザーの明示依頼により`c75de52`でPrivate反映済み。
+
+
+## Apple Silicon配布候補（2026-11-27）
+
+Python固定パスを検出ランナーに変更し、独立したZIP用導入・更新・停止・復元ツールを追加。配布物からの確認結果は[distribution/VALIDATION.md](distribution/VALIDATION.md)に記録します。稼働中ウィジェット・個人状態を更新せず、隔離先を使います。過去の実機操作確認と今回の隔離テストを混同しません。ZIP・文書はローカルのみでGitHub Releaseには未送信です。

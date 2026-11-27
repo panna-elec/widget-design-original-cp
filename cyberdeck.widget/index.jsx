@@ -6,7 +6,7 @@ import { createPointerRouter } from './lib/native-pointer.js';
 import { mountNativeSurface } from './lib/native-surface.js';
 
 // Commands run from Übersicht's configured widgets directory.
-export const command = '/opt/homebrew/bin/python3 "./cyberdeck.widget/bin/collect.py"';
+export const command = '/bin/bash "./cyberdeck.widget/bin/python3.sh" "./cyberdeck.widget/bin/collect.py"';
 export const refreshFrequency = 5000;
 export const className = 'top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none;';
 export const initialState = { sample: null, data: null, error: false };
@@ -46,7 +46,7 @@ function send(frame, state) {
         if(!request || !['save','launch','desktop-mode'].includes(request.action) || typeof message.requestId!=='string')return;
         const json=JSON.stringify(request);if(json.length>500000)return;
         const encoded=btoa(unescape(encodeURIComponent(json)));
-        run('/opt/homebrew/bin/python3 "./cyberdeck.widget/bin/desk_store.py" "'+encoded+'"').then(output=>{
+        run('/bin/bash "./cyberdeck.widget/bin/python3.sh" "./cyberdeck.widget/bin/desk_store.py" "'+encoded+'"').then(output=>{
           let result;try{result=JSON.parse(output);}catch(_){result={ok:false,error:'処理結果を読めませんでした'};}
           if(frame.isConnected)frame.contentWindow.postMessage({channel:'cyberdeck',type:'desk-result',requestId:message.requestId,result},window.location.origin);
         }).catch(()=>{if(frame.isConnected)frame.contentWindow.postMessage({channel:'cyberdeck',type:'desk-result',requestId:message.requestId,result:{ok:false,error:'操作できませんでした'}},window.location.origin);});

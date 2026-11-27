@@ -14,7 +14,7 @@ You should have received a copy of the GNU General Public License along with thi
 
 SPDX-License-Identifier: GPL-3.0-or-later
 
-対象は、このリポジトリの独自コード・設定・テスト・付随する独自文書です。具体的には`cyberdeck.widget/`のJSX/JS/MJS/CSS/HTML/Python/JSON、`native/`、`scripts/`、`sketchybar/`、`tests/`、ルートのプレビューHTML/CSS/JS・起動コマンドを含みます。下記CC BY素材と第三者素材は除外します。
+対象は、このリポジトリの独自コード・設定・テスト・付随する独自文書です。具体的には`cyberdeck.widget/`のJSX/JS/MJS/CSS/HTML/Python/Shell/JSON、`native/`、`scripts/`、`distribution/`、`sketchybar/`、`tests/`、ルートのプレビューHTML/CSS/JS・起動コマンドを含みます。下記CC BY素材と第三者素材は除外します。
 
 **`cyberdeck.widget/lib/koi.js`は組み込みSVGの鯉図案を含めてGPL-3.0-or-laterです。** 独立画像だけに適用するCC BY条件で、このファイルの利用を追加制限しません。元AI画像の出所はASSETS.mdを参照。権利を保有／許諾できる範囲で提供し、AI生成部分に必ず独占的著作権が成立するという保証ではありません。
 
@@ -28,6 +28,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 | CYBER壁紙 | `cyberdeck.widget/lib/wallpaper-cyber.svg`、`wallpaper-cyber.png` |
 | REFERENCE壁紙 | `cyberdeck.widget/lib/wallpaper-reference.svg`、`wallpaper-reference.png` |
 | READMEの静止画 | `docs/media/overview.jpg`、`docs/media/koi-settings.jpg` |
+| 導入ガイドの独立した説明画像 | `docs/manual/quickstart-ja.png`、`docs/manual/quickstart-en.png`（AI生成の概念図。実画面ではない） |
 | READMEのアニメーション画像 | `docs/media/koi-animation.gif`、`docs/media/panel-controls.gif` |
 
 このリポジトリにはBGMを同梱していません。mypageの音源の条件はmypage側の対象表を参照します。
@@ -60,7 +61,7 @@ CyberKDEは任意の制作参照記録であり、必須クレジットとして
 
 ## ソースと配布
 
-ソース配布ではこのリポジトリのコード・原文・対象表・出所記録を一緒に保持します。コンパイル済み`stats`は現在Git管理外です。バイナリやÜbersichtを含む結合物を将来配布する場合は、配布物に対応する完全なソース・ビルド手順・ライセンス表示を確認してください。
+ソース配布ではこのリポジトリのコード・原文・対象表・出所記録を一緒に保持します。コンパイル済み`stats`は現在Git管理外です。ローカルで作るApple Silicon ZIP候補には対応する完全なソース・ビルド手順・ライセンス原文を同梱します。バイナリはGit管理外のままで、Übersicht本体は同梱しません。配布条件と再ビルド手順はINSTALL.md / INSTALL.ja.mdを参照してください。
 
 このフォルダーを自分のMacへインストールすることと、バイナリを他人へ配布することは別です。`cyberdeck.widget/`単独にはSwift原本が含まれないため、`stats`入りの導入済みフォルダーだけをそのまま公開用ZIPにしないでください。配布する際は`native/Stats.swift`と必要なビルド／導入スクリプトを含む対応ソースを同時に提供する必要があります。詳しくは[SETUP.md](SETUP.md)。
 

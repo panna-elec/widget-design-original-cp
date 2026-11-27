@@ -1,6 +1,6 @@
 # 素材と実行環境の出所
 
-現在の条件: 独自コードと組み込みの鯉SVGはGPL-3.0-or-later、独立画像はCC BY 4.0。[対象表](LICENSE_SCOPE.md)を参照してください。以下の制作経緯にある「未設定」は当時の記録です。素材台帳は言語切替モジュールを含め計53件です。
+現在の条件: 独自コードと組み込みの鯉SVGはGPL-3.0-or-later、独立画像はCC BY 4.0。[対象表](LICENSE_SCOPE.md)を参照してください。以下の制作経緯にある「未設定」は当時の記録です。素材台帳には言語切替モジュールと配布用ツールの出所・ハッシュを含めます。
 
 - wallpaper.svg / wallpaper.png：今回コードで新規制作した幾何学的な街並み。SVG原本を@resvg/resvg-jsで2560×1600 PNGへ変換。画像生成モデルの出力ではありません。
 - preview / widget / Stats.swift / scripts：今回の独自実装。参考リポジトリからの素材・コードのコピーなし。SVGとPNGは同一素材IDで管理。
@@ -104,3 +104,15 @@ CyberKDEは任意の制作参照記録として保持する。2026-11-27の固�
 ## Language, connection types and English media refresh (2026-11-27)
 
 英語・日本語切替モジュールi18n.jsは独自コードとしてGPL-3.0-or-laterの対象。新しい外部素材は追加していない。接続分類はmacOS SystemConfigurationとIOKitを使用。README媒体4点を最新の英語プレビューで撮り直し、従来と同じCC BY 4.0対象パスを差し替えた。計53件の素材台帳ハッシュを更新。撮影・符号化条件はdocs/media/README.mdを参照。
+
+
+## Apple Silicon配布候補（2026-11-27）
+
+Python検出ランナー、ZIP作成・導入・更新・復元ツール、配布手順・テストは今回の独自実装でGPL-3.0-or-later。新しい第三者コード・素材・ライブラリは追加していません。既存の画像、フォント、OFL/MIT/GPL/CC原文を保持します。Swift実行ファイルは同梱native/Stats.swiftから生成し、配布ごとのSHAとビルド条件をBUILD-INFO.jsonに記録します。個人データ・バックアップ・履歴・端末ログを配布対象へ含めず、distribution/files.jsonの明示リストから梱包します。GitHubへの送信は未実施です。
+
+
+## 英日図解とオフライン導入マニュアル（2026-11-27）
+
+ユーザーの追加依頼によりdocs/manual/quickstart-ja.pngとquickstart-en.pngを内蔵画像生成ツールで作成。説明用の図でありmacOSの実画面ではありません。既存の独立画像の方針に沿い、許諾可能な権利の範囲でCC BY 4.0。AI生成による独占的著作権・第三者権利の非侵害は保証しません。認識可能なソフトウェアロゴは画像編集で除き、一般的な図形へ変更。原寸図・目視確認・来歴メタデータを点検し、個人名・端末パス等は検出していません。出所・SHA・生成指示はdocs/manual/SOURCES.mdとIMAGE-PROMPTS.mdを参照します。
+
+START-HERE.html、英日HTML、CSS・テンプレート・生成補助スクリプトは既存GPL-3.0-or-laterの独自文書・コード。PandocはHTML再生成時のみ使う外部開発ツールで、本体は同梱せず、読者やウィジェット利用者の依存要件にも追加しません。実行処理は先の配布候補から変更していません。

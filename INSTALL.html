@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Widget Design — Installation</title><link rel="stylesheet" href="docs/manual/manual.css"></head>
+<body>
+<header><strong>WIDGET DESIGN <span class="tag">0.1.0-preview.1</span></strong><nav aria-label="Language"><a href="START-HERE.html">Start / はじめに</a><a href="INSTALL.html" lang="en">English</a><a href="INSTALL.ja.html" lang="ja">日本語</a></nav></header>
+<main><details id="TOC"><summary>Contents / 目次</summary><ul>
+<li><a href="#install-widget-design--apple-silicon-preview">Install Widget Design — Apple Silicon preview</a>
+<ul>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#verify-and-install">Verify and install</a></li>
+<li><a href="#macos-security">macOS security</a></li>
+<li><a href="#if-a-warning-appears">If a warning appears</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#update-stop-and-restore">Update, stop, and restore</a></li>
+<li><a href="#build-from-the-included-source">Build from the included source</a></li>
+<li><a href="#verification-limits">Verification limits</a></li>
+</ul></li>
+</ul></details><h1 id="install-widget-design--apple-silicon-preview">Install Widget Design — Apple Silicon preview</h1>
+<p><strong>English</strong> | <a href="INSTALL.ja.html">日本語</a></p>
+<p>Package: <code>0.1.0-preview.1</code>. This is a local release candidate, not an uploaded GitHub Release. It contains the compiled arm64 collector and its complete corresponding source. Start with this guide and <code>Manage.command</code>; the Japanese legacy start/stop shortcuts are for the optional SketchyBar setup and are not needed here.</p>
+<p><strong>GitHub source ZIP vs. distribution ZIP:</strong> GitHub’s <strong>Code → Download ZIP</strong> contains source only; it does not include the compiled <code>stats</code>, <code>MANIFEST.json</code> or <code>BUILD-INFO.json</code>. The prebuilt distribution ZIP has not been uploaded yet. For a source checkout, use the source-build instructions below; use <code>Manage.command</code> only from a built distribution package.</p>
+<p>Open <strong>START-HERE.html</strong> in your browser for the offline manual. No server, account or extra reader is needed. Choose English or 日本語; use your browser's Print command for a paper/PDF copy. Keep the entire extracted folder together so its illustrations and links work.</p>
+<p><a href="docs/manual/quickstart-en.png">View the illustration at full size</a></p>
+<p><img src="docs/manual/quickstart-en.png" alt="Six steps: prepare dependencies; verify and extract the ZIP; check and install; handle a macOS warning only after checking the source; refresh the widget; use the manual to disable or restore." /></p>
+<p><em>AI-generated explanatory illustration, not a screenshot. Read the exact steps below; the image does not establish compatibility or security approval.</em></p>
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li>Apple Silicon Mac, running natively (not Rosetta). Binary deployment target: macOS 13+. Tested on macOS 26.6.1; earlier versions are not yet verified.</li>
+<li><a href="https://tracesof.net/uebersicht/">Übersicht</a> installed separately. Tested with version 1.6, build 82. The app is not bundled.</li>
+<li>Python 3.10+ with the standard library. Tested with 3.13.18. Install from <a href="https://www.python.org/downloads/macos/">python.org</a> or use an existing Homebrew Python. No pip packages required. Installing those prerequisites may request administrator authentication.</li>
+<li>No Node.js, Swift compiler, npm packages, SketchyBar or administrator privileges are needed for normal ZIP installation. Rebuilding the binary needs Xcode Command Line Tools.</li>
+</ul>
+<p>The widget looks for Python at <code>/opt/homebrew/bin/python3</code>, then <code>/usr/local/bin/python3</code>, then an absolute <code>python3</code> found in PATH. It avoids the system Python stub that could trigger a developer-tools installer. For a nonstandard installation, <code>CYBERDECK_PYTHON</code> can select an absolute executable, but Übersicht must inherit the same variable; a Terminal-only setting does not configure the GUI app.</p>
+<h2 id="verify-and-install">Verify and install</h2>
+<ol type="1">
+<li><p>Keep the ZIP and matching <code>.zip.sha256</code> side by side. In Terminal, change to their folder and run:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">shasum</span> <span class="at">-a</span> 256 <span class="at">-c</span> widget-design-0.1.0-preview.1-macos-arm64.zip.sha256</span></code></pre></div>
+<p>Expect <code>OK</code>. This detects corruption relative to the checksum; it does not authenticate an untrusted download.</p></li>
+<li><p>Extract the ZIP, keeping its whole folder together. Open <code>INSTALL.md</code> or <code>INSTALL.ja.md</code>. Do not copy only the executable.</p></li>
+<li><p>Install and open Übersicht. Use <strong>Open Widgets Folder</strong> to confirm the destination. The default is <code>~/Library/Application Support/Übersicht/widgets/</code>.</p></li>
+<li><p>Double-click <code>Manage.command</code>, choose <strong>1 — Check</strong>. Alternatively, in Terminal from the extracted folder:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> Manage.command check</span></code></pre></div>
+<p>To open Terminal in the right folder: type <code>cd </code> (with a space), drag the extracted folder from Finder into Terminal, then press Return. Paste one command at a time. Do not type the displayed prompt symbol.</p>
+<p>The check verifies prerequisites and every packaged file against <code>MANIFEST.json</code>; it does not install, start the collector or change desktop settings. Missing dependencies stop the operation; they are never installed automatically.</p></li>
+<li><p>Choose <strong>2 — Install</strong>, or run <code>bash Manage.command install</code>. An existing <code>cyberdeck.widget</code> is never overwritten by this action. For a custom widgets location, use:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> Manage.command install <span class="at">--widgets-dir</span> <span class="st">&quot;/path/to/widgets&quot;</span></span></code></pre></div>
+<p>Repeat the same <code>--widgets-dir</code> for update/disable/restore. A custom app path can be supplied with <code>--uebersicht-app "/path/to/Übersicht.app"</code>. Symlink locations are rejected. Backup and widget folders must be separate and on the same filesystem; use <code>--backup-dir "/path/to/backups"</code> if needed and reuse it for later commands.</p></li>
+<li><p>In Übersicht choose <strong>Refresh all Widgets</strong>, and allow roughly 10 seconds for two metric samples. Open Calendar, then Desk; select English or Japanese. Confirm desktop files can be selected before and after using the widget.</p></li>
+<li><p>Optionally choose <code>wallpaper-reference.png</code> in macOS Wallpaper settings. Other included wallpapers match CYBER and CLEAN. The installer does not change wallpaper, login items, or other widgets.</p></li>
+</ol>
+<h2 id="macos-security">macOS security</h2>
+<p>Apple notarization is a security check, not the project's copyright license or a blanket prerequisite for publishing source/preview ZIPs on GitHub. An unnotarized preview must clearly disclose its startup limitations. Apple requires notarization for modern software distributed with Developer ID; this candidate has no Developer ID signature. See <a href="https://developer.apple.com/documentation/security/notarizing-macos-software-before-distribution">Apple's notarization documentation</a>.</p>
+<p>This preview collector is <strong>ad-hoc signed</strong>, with <strong>no Developer ID signature or Apple notarization</strong>. A local signature verification is not a Gatekeeper approval. A browser-downloaded copy may be blocked. Review the source and trust of the download first. If macOS blocks it, follow <a href="https://support.apple.com/en-us/102445">Apple's current guidance</a>; do not disable Gatekeeper or recursively remove quarantine attributes. If macOS offers no suitable per-item approval, stop and use a reviewed local source build or wait for a signed release. Approval of <code>Manage.command</code> does not necessarily approve the <code>stats</code> executable separately.</p>
+<p>The normal widget uses local system readings and explicit local file/folder shortcuts. It does not request Accessibility, Screen Recording or Full Disk Access as a general installation requirement. Do not grant unrelated permissions just to silence an error. OS-controlled folder access depends on the shortcut you open. Viewing mode intentionally changes Finder icon visibility and reloads Finder; avoid it during Finder file operations.</p>
+<h2 id="if-a-warning-appears">If a warning appears</h2>
+<p><strong>Does clicking OK install the widget?</strong> Not necessarily. Copying the widget and allowing the <code>stats</code> helper to run are separate steps. An approval for <code>Manage.command</code> does not automatically cover the helper. The exact downloaded-copy approval flow has not yet been tested on another Mac.</p>
+<ol type="1">
+<li>Read the blocked item's name. <code>Manage.command</code> is the installer menu; <code>stats</code> is the local system-meter helper inside <code>cyberdeck.widget/bin/</code>. Do not approve an unfamiliar item just because its name is similar.</li>
+<li>Verify the source and checksum. A checksum mismatch, unexpected file, or a message that the item will damage your computer is a reason to stop, not an instruction to override the warning.</li>
+<li>If you trust the reviewed download and macOS shows the ordinary unidentified-developer/not-verified warning, follow <a href="https://support.apple.com/en-us/102445">Apple's instructions</a>. After an attempted launch, <strong>System Settings → Privacy &amp; Security</strong> may show <strong>Open Anyway</strong> for that specific item. Read the item name, approve only if you intend to trust it, and authenticate if macOS requests it. Labels vary by macOS version.</li>
+<li>If no suitable item-specific approval is offered, or the Mac is managed by an organization, stop and consult its administrator or wait for a signed/notarized release. Do not disable Gatekeeper, remove quarantine in bulk, or grant Full Disk Access as a workaround.</li>
+<li>After successful approval, retry the failed action and use <strong>Refresh all Widgets</strong>. If the panel loads but meters still fail, the helper may remain blocked; repeated clicks on the installer do not resolve that separately.</li>
+</ol>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Symptom</th>
+<th>Next step</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Python 3.10+ not found</code></td>
+<td>Install Python from the official macOS installer, or check your existing Homebrew installation. Re-run <code>bash Manage.command check</code>. The normal runner detects standard locations even when Übersicht's PATH differs from Terminal's.</td>
+</tr>
+<tr class="even">
+<td><code>Install Übersicht first</code></td>
+<td>Check that the app is in Applications or your user's Applications folder. For another location, pass <code>--uebersicht-app</code> as shown above. The package never downloads it for you.</td>
+</tr>
+<tr class="odd">
+<td><code>Already installed</code></td>
+<td>Use Update only when you intend to replace the existing Cyberdeck. Keep the backup ID printed afterwards. Do not delete personal state to solve this message.</td>
+</tr>
+<tr class="even">
+<td><code>Package checksum mismatch</code> or <code>Package files changed</code></td>
+<td>Extract a fresh, verified ZIP into a new folder. Do not edit <code>MANIFEST.json</code> to bypass the check.</td>
+</tr>
+<tr class="odd">
+<td>Nothing appears</td>
+<td>Confirm the folder selected by Übersicht's Open Widgets Folder, confirm <code>cyberdeck.widget</code> is directly inside it, then Refresh all Widgets. Do not nest it inside another release folder.</td>
+</tr>
+<tr class="even">
+<td>Panels appear but meters are unavailable</td>
+<td>Wait roughly 10 seconds. If the problem persists, check Python and any macOS warning for <code>stats</code>. Earlier macOS versions have not been tested.</td>
+</tr>
+<tr class="odd">
+<td>Buttons or desktop-file clicks fail</td>
+<td>Refresh; check for a second, older copy of the same widget in the watched folder. If it persists, disable this widget or restore its backup rather than altering unrelated macOS security settings. Direct native click behavior was not retested for this ZIP.</td>
+</tr>
+<tr class="even">
+<td><code>Stopped</code> while updating/restoring</td>
+<td>Read the error. The tool retains backups and attempts rollback if final placement fails. Keep the printed ID and backup folder; avoid manually deleting them during recovery.</td>
+</tr>
+<tr class="odd">
+<td>Icons are still hidden</td>
+<td>If the widget is active, use its viewing-mode restore control. Disable also tries to restore an owned record; if it fails, the widget remains installed. Do not delete <code>desktop-mode.json</code>: it stores the original visibility setting.</td>
+</tr>
+<tr class="even">
+<td>You want the old appearance</td>
+<td>Restore a widget backup for its initial theme preferences. For koi size/line width, choose 100% in Desk → Effects. Restoring a widget backup does not rewind tasks or newer desk settings.</td>
+</tr>
+</tbody>
+</table>
+<p>For support, report the package version, macOS version, Übersicht version/build, Python version, action taken and exact error. Remove personal names, home paths, task/link contents and unrelated files from logs or screenshots before sharing. Do not attach the Cyberdeck state folder or installation backups.</p>
+<h2 id="update-stop-and-restore">Update, stop, and restore</h2>
+<p>Close widget panels before maintenance. You may quit Übersicht temporarily to prevent live reloads during replacement; this also pauses your other widgets. Restart it and refresh afterwards. No global process is killed by the installer.</p>
+<p>Run from a newly extracted, intact package:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> Manage.command update</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> Manage.command disable</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> Manage.command restore <span class="at">--backup-id</span> ID_PRINTED_BY_THE_TOOL</span></code></pre></div>
+<ul>
+<li><strong>Update:</strong> moves the existing installation to a unique backup, copies the new widget, and preserves <code>lib/preferences.json</code>. On a failed final move, restores the previous installation automatically.</li>
+<li><strong>Disable:</strong> restores desktop visibility only if this widget owns a restoration record, then moves just <code>cyberdeck.widget</code> to a backup. Wallpaper stays as selected. If visibility restoration fails, the installation remains in place.</li>
+<li><strong>Restore:</strong> reinstalls the selected backup and its original preferences. If a widget is installed, it is backed up first. Restore does not roll back personal tasks or newer desk settings.</li>
+</ul>
+<p>Backups live at <code>~/Library/Application Support/Cyberdeck-install-backups/</code>, outside Übersicht's watched folder. Keep the printed backup ID. The tool does not automatically delete backups. Backups can contain personal preferences; never upload them.</p>
+<p>Tasks, shortcuts, layout and koi settings remain at <code>~/Library/Application Support/Cyberdeck/</code>. Installation and update do not read, replace or delete <code>state.json</code>; disable may consume only the owned viewing-mode restoration record. No personal state is included in the package. The installed folder must retain the name <code>cyberdeck.widget</code>.</p>
+<h2 id="build-from-the-included-source">Build from the included source</h2>
+<p>Full source, tests, original license texts and build/installation scripts are in this ZIP, at their repository paths; no private URL or separate source request is required. <code>BUILD-INFO.json</code> records the source base commit, exact hashes including local modifications, compiler, target and binary hash. <code>MANIFEST.json</code> covers the delivered files. The source base commit alone is not claimed to reproduce local changes.</p>
+<p>For a new package, install Xcode Command Line Tools and, from this folder, run:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> scripts/build-distribution.py <span class="at">--version</span> 0.1.0-preview.1 <span class="at">--source-base</span> 8fb0c6624143ee59058011e52c6fcd984f9efb81 <span class="at">--output</span> ./exports-rebuilt</span></code></pre></div>
+<p>The builder uses the explicit <code>distribution/files.json</code> allowlist, compiles <code>native/Stats.swift</code> for <code>arm64-apple-macos13.0</code>, ad-hoc signs the result, and writes a ZIP plus SHA-256. It never uploads or installs. Existing output is not overwritten. Compiler/SDK differences can change binary bytes; bit-for-bit reproducibility across toolchains is not promised.</p>
+<p>For an individual source build (not a manifest-verified package update):</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">swiftc</span> <span class="at">-O</span> <span class="at">-target</span> arm64-apple-macos13.0 native/Stats.swift <span class="at">-o</span> cyberdeck.widget/bin/stats</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> scripts/install-widget.sh</span></code></pre></div>
+<p>This legacy source installer supports first installation only and refuses an existing widget. After a source edit, create a new package before using <code>Manage.command</code>; modifying a packaged file invalidates its manifest. See <a href="SETUP.md">SETUP.md</a> for optional source workflows and <a href="LICENSE_SCOPE.md">LICENSE_SCOPE.md</a> for GPL-3.0-or-later code, CC BY 4.0 independent artwork and third-party exceptions.</p>
+<h2 id="verification-limits">Verification limits</h2>
+<p>See <a href="distribution/VALIDATION.md">distribution/VALIDATION.md</a> for actual results. A local extracted-package test is not a clean-Mac or browser-download/quarantine test. Before a general release, verify installation on a separate Apple Silicon Mac and decide the Developer ID/notarization route. Intel builds, hardware connection switching and full multi-display/sleep testing remain outside this preview.</p></main>
+<footer>panna-elec · AI-generated explanatory illustrations / AI生成の説明図 · Code and documentation: GPL-3.0-or-later · Illustrations: CC BY 4.0 within licensable rights. <a href="docs/manual/SOURCES.md">Sources / 出所</a></footer>
+</body></html>

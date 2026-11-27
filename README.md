@@ -97,16 +97,20 @@ Open http://127.0.0.1:8767/ and stop with `Control+C`. Metrics are synthetic, pr
 
 ### macOS installation
 
-The recorded installation uses Apple Silicon, Übersicht 1.6.82 and Homebrew Python 3. Building the helper requires Xcode Command Line Tools. Scripts contain Apple Silicon Homebrew paths; Intel Macs and other layouts are untested. SketchyBar 2.24.1 is optional.
+An Apple Silicon ZIP candidate (`0.1.0-preview.1`) is prepared locally, with a compiled collector, complete corresponding source, checksums and English/Japanese installation guides. **No GitHub Release has been uploaded.** For an available ZIP, open [START-HERE.html](START-HERE.html) for the illustrated offline English/Japanese manuals, then use `Manage.command`. Text versions remain available in [INSTALL.md](INSTALL.md) / [日本語](INSTALL.ja.md).
 
-Install [Übersicht](https://tracesof.net/uebersicht/) separately, then build and install:
+**GitHub source ZIP vs. distribution ZIP:** GitHub’s **Code → Download ZIP** contains source only; it does not include the compiled `stats`, `MANIFEST.json` or `BUILD-INFO.json`. The prebuilt distribution ZIP has not been uploaded yet. For a source checkout, use the source-build instructions below; use `Manage.command` only from a built distribution package.
+
+The ZIP targets macOS 13+ and needs separately installed [Übersicht](https://tracesof.net/uebersicht/) and Python 3.10+. Tested: macOS 26.6.1, Übersicht 1.6 (build 82), Python 3.13.18. Python is detected automatically. The collector is ad-hoc signed, without Developer ID or Apple notarization; downloaded-copy/clean-Mac testing remains outstanding. See [package verification](distribution/VALIDATION.md).
+
+For a source-only checkout, build the helper using Xcode Command Line Tools, then use the first-install script:
 
 ```sh
-swiftc -O native/Stats.swift -o cyberdeck.widget/bin/stats
+swiftc -O -target arm64-apple-macos13.0 native/Stats.swift -o cyberdeck.widget/bin/stats
 bash scripts/install-widget.sh
 ```
 
-The installer refuses to overwrite an existing `cyberdeck.widget`. Read [SETUP.md (Japanese)](SETUP.md) for prerequisites, wallpaper alignment, installation paths, updates, restoration and optional bar controls. Downloading this repository does not automatically update a running widget.
+The source installer refuses to overwrite an existing widget. The ZIP manager supports backed-up updates, disable and restore while preserving personal desk state. [SETUP.md (Japanese)](SETUP.md) covers the optional SketchyBar workflow, which is separate from ZIP installation. Downloading this repository does not automatically update a running widget.
 
 ### Koi and desktop controls
 
@@ -167,6 +171,6 @@ CC BY permits commercial use and adaptation of the specified artwork with attrib
 
 Personal tasks, links and layout are stored under `~/Library/Application Support/Cyberdeck/`, outside Git. Logs, live screenshots, backups and compiled binaries are excluded. See the [privacy checklist](docs/PRIVACY_CHECK.md).
 
-[panna-elec/widget-design-original-cp](https://github.com/panna-elec/widget-design-original-cp) is **Public**. This is a source-code repository; GitHub Pages and binary releases are not enabled. Future uploads, visibility changes, hosting and installed-widget updates follow their respective authorization scopes. Existing source workspaces and running widgets are preserved.
+[panna-elec/widget-design-original-cp](https://github.com/panna-elec/widget-design-original-cp) is **Public**. This is a source-code repository; GitHub Pages and binary releases are not enabled; the ZIP candidate is local only. Future uploads, visibility changes, hosting and installed-widget updates follow their respective authorization scopes. Existing source workspaces and running widgets are preserved.
 
 Maintain `README.md` in English and `README.ja.md` in Japanese together. Supporting documentation is currently mainly Japanese. [Rights review](RIGHTS_AND_LICENSES.md), [asset provenance](ASSETS.md) and [inventory](asset-inventory.csv) retain detailed records and original third-party notices.

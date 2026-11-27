@@ -1,10 +1,12 @@
 # 導入・操作・停止
 
+Apple Silicon配布ZIPを受け取った場合は、[INSTALL.ja.md](INSTALL.ja.md) / [INSTALL.md](INSTALL.md)と`Manage.command`を使用します。本書はソースからの導入と任意のSketchyBar構成を含みます。ZIPはローカルのRelease候補で、GitHub Releaseには未アップロードです。
+
 ## 対象環境
 
 実機確認はApple SiliconのMac、Übersicht 1.6.82、HomebrewのPython 3（`/opt/homebrew/bin/python3`）で行いました。任意の上部バーはSketchyBar 2.24.1。SwiftのビルドにはXcode Command Line Toolsが必要です。
 
-現行スクリプトにはApple SiliconのHomebrewパスが含まれます。Intel Macや別のPython配置は未検証です。`/opt/homebrew/bin/python3`、上部バーを使う場合の`/opt/homebrew/bin/sketchybar`を環境に合わせる必要があります。
+ウィジェット本体のPythonは`bin/python3.sh`で3.10以上を自動検出します（Homebrew、python.org標準配置、PATHの順）。ZIP版のビルド対象はApple Silicon・macOS 13以上です。任意の上部バーには引き続きHomebrew固定パスが含まれます。Intelや旧OS・特殊な配置は実機未検証です。
 
 ## プレビュー
 
@@ -22,7 +24,7 @@ python3 -m http.server 8767 --bind 127.0.0.1
 2. 次のコマンドで実行ファイルを作ります。コンパイル済みの`stats`はGitへ含めません。
 
    ```sh
-   swiftc -O native/Stats.swift -o cyberdeck.widget/bin/stats
+   swiftc -O -target arm64-apple-macos13.0 native/Stats.swift -o cyberdeck.widget/bin/stats
    ```
 
 3. ウィジェットを配置します。
@@ -102,4 +104,4 @@ bash scripts/disable-widget.sh
 
 独自コード・組み込みの鯉SVGはGPL-3.0-or-later、独立した壁紙・README画像はCC BY 4.0です。[対象表](LICENSE_SCOPE.md)を参照してください。`cyberdeck.widget/`内のLICENSE・NOTICE.md・CC BY原文と、既存のフォントOFLはインストール時に一緒にコピーされます。
 
-自分用のローカルビルドと、コンパイル済み`stats`の第三者配布を区別してください。バイナリを配布する際は、同じ版の`native/Stats.swift`と必要なビルド・導入スクリプトを含む完全な対応ソースを提供し、GPLの原文・著作権表示・変更表示等を保持します。PrivateリポジトリのURLを示すだけで、受領者がソースを取得できない状態にはしません。今回、バイナリ配布や実機更新は行っていません。
+自分用のローカルビルドと、コンパイル済み`stats`の第三者配布を区別してください。バイナリを配布する際は、同じ版の`native/Stats.swift`と必要なビルド・導入スクリプトを含む完全な対応ソースを提供し、GPLの原文・著作権表示・変更表示等を保持します。PrivateリポジトリのURLを示すだけで、受領者がソースを取得できない状態にはしません。バイナリ入りZIP候補は対応ソース込みでローカル作成します。GitHub Releaseへの配布・稼働中の実機更新は未実施です。
