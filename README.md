@@ -156,8 +156,6 @@ The licensor for original work is **panna-elec**. See [LICENSE_SCOPE.md](LICENSE
 
 CC BY permits commercial use and adaptation of the specified artwork with attribution, a license link and change notices. AI provenance does not guarantee exclusive copyright or absence of third-party rights; grants cover only rights panna-elec can license.
 
-[The licensing review](docs/LICENSE_REVIEW.md) records the CyberKDE comparison and Übersicht integration assessment. No independent CyberKDE code/artwork match was detected in the documented comparison; this is bounded evidence, not a universal non-infringement guarantee. The reference is retained as voluntary provenance, not treated as a mandatory credit for copied assets.
-
 ## Privacy and maintenance
 
 Personal tasks, links and layout are stored under `~/Library/Application Support/Cyberdeck/`, outside Git. Logs, live screenshots, backups and compiled binaries are excluded. See the [privacy checklist](docs/PRIVACY_CHECK.md).
