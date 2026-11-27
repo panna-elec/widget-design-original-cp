@@ -1,6 +1,6 @@
 # 導入・操作・停止
 
-Apple Silicon配布ZIPを受け取った場合は、[INSTALL.ja.md](INSTALL.ja.md) / [INSTALL.md](INSTALL.md)と`Manage.command`を使用します。本書はソースからの導入と任意のSketchyBar構成を含みます。ZIPはローカルのRelease候補で、GitHub Releaseには未アップロードです。
+Apple Silicon配布ZIPを受け取った場合は、[INSTALL.ja.md](INSTALL.ja.md) / [INSTALL.md](INSTALL.md)と`Manage.command`を使用します。本書はソースからの導入と任意のSketchyBar構成を含みます。実行ファイル入りのApple Silicon版ZIPとチェックサムは、[v0.1.0-preview.1プレリリース](https://github.com/panna-elec/widget-design-original-cp/releases/tag/v0.1.0-preview.1)から取得できます。
 
 ## 対象環境
 
@@ -104,4 +104,4 @@ bash scripts/disable-widget.sh
 
 独自コード・組み込みの鯉SVGはGPL-3.0-or-later、独立した壁紙・README画像はCC BY 4.0です。[対象表](LICENSE_SCOPE.md)を参照してください。`cyberdeck.widget/`内のLICENSE・NOTICE.md・CC BY原文と、既存のフォントOFLはインストール時に一緒にコピーされます。
 
-自分用のローカルビルドと、コンパイル済み`stats`の第三者配布を区別してください。バイナリを配布する際は、同じ版の`native/Stats.swift`と必要なビルド・導入スクリプトを含む完全な対応ソースを提供し、GPLの原文・著作権表示・変更表示等を保持します。PrivateリポジトリのURLを示すだけで、受領者がソースを取得できない状態にはしません。バイナリ入りZIP候補は対応ソース込みでローカル作成します。GitHub Releaseへの配布・稼働中の実機更新は未実施です。
+自分用のローカルビルドと、コンパイル済み`stats`の第三者配布を区別してください。バイナリを配布する際は、同じ版の`native/Stats.swift`と必要なビルド・導入スクリプトを含む完全な対応ソースを提供し、GPLの原文・著作権表示・変更表示等を保持します。PrivateリポジトリのURLを示すだけで、受領者がソースを取得できない状態にはしません。Apple Silicon向けプレリリースのZIPには完全な対応ソースを同梱します。公開するZIPと対応するソースの一致はBUILD-INFO.jsonとMANIFEST.jsonで確認できます。Release公開による稼働中ウィジェットの自動更新は行いません。

@@ -2,10 +2,10 @@
 
 **English** | [日本語](INSTALL.ja.md)
 
-Package: `0.1.0-preview.1`. This is a local release candidate, not an uploaded GitHub Release. It contains the compiled arm64 collector and its complete corresponding source. Start with this guide and `Manage.command`; the Japanese legacy start/stop shortcuts are for the optional SketchyBar setup and are not needed here.
+Package: `0.1.0-preview.1`. This is the [Apple Silicon prerelease](https://github.com/panna-elec/widget-design-original-cp/releases/tag/v0.1.0-preview.1), not a notarized production release. It contains the compiled arm64 collector and its complete corresponding source. Start with this guide and `Manage.command`; the Japanese legacy start/stop shortcuts are for the optional SketchyBar setup and are not needed here.
 
 
-**GitHub source ZIP vs. distribution ZIP:** GitHub’s **Code → Download ZIP** contains source only; it does not include the compiled `stats`, `MANIFEST.json` or `BUILD-INFO.json`. The prebuilt distribution ZIP has not been uploaded yet. For a source checkout, use the source-build instructions below; use `Manage.command` only from a built distribution package.
+**GitHub source ZIP vs. distribution ZIP:** GitHub’s **Code → Download ZIP** contains source only; it does not include the compiled `stats`, `MANIFEST.json` or `BUILD-INFO.json`. The prebuilt Apple Silicon ZIP and its checksum are available from the [v0.1.0-preview.1 prerelease](https://github.com/panna-elec/widget-design-original-cp/releases/tag/v0.1.0-preview.1). For a source checkout, use the source-build instructions below; use `Manage.command` only from a built distribution package.
 
 Open **START-HERE.html** in your browser for the offline manual. No server, account or extra reader is needed. Choose English or 日本語; use your browser's Print command for a paper/PDF copy. Keep the entire extracted folder together so its illustrations and links work.
 
@@ -116,7 +116,8 @@ Full source, tests, original license texts and build/installation scripts are in
 For a new package, install Xcode Command Line Tools and, from this folder, run:
 
 ```sh
-python3 scripts/build-distribution.py --version 0.1.0-preview.1 --source-base 8fb0c6624143ee59058011e52c6fcd984f9efb81 --output ./exports-rebuilt
+WIDGET_SOURCE_COMMIT="$(python3 -c "import json; print(json.load(open('BUILD-INFO.json'))['sourceBaseCommit'])")"
+python3 scripts/build-distribution.py --version 0.1.0-preview.1 --source-base "$WIDGET_SOURCE_COMMIT" --output ./exports-rebuilt
 ```
 
 The builder uses the explicit `distribution/files.json` allowlist, compiles `native/Stats.swift` for `arm64-apple-macos13.0`, ad-hoc signs the result, and writes a ZIP plus SHA-256. It never uploads or installs. Existing output is not overwritten. Compiler/SDK differences can change binary bytes; bit-for-bit reproducibility across toolchains is not promised.

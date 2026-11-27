@@ -2,10 +2,10 @@
 
 [English](INSTALL.md) | **日本語**
 
-パッケージ版: `0.1.0-preview.1`。ローカルで準備したRelease候補で、GitHub Releaseには未アップロードです。arm64版の実行ファイルと完全な対応ソースを同梱します。まずこの手順と`Manage.command`を使用してください。既存の日本語の開始・停止ショートカットは任意のSketchyBar構成用で、今回の導入には不要です。
+パッケージ版: `0.1.0-preview.1`。[Apple Silicon向けのプレリリース](https://github.com/panna-elec/widget-design-original-cp/releases/tag/v0.1.0-preview.1)です。Apple公証済みの正式版ではありません。arm64版の実行ファイルと完全な対応ソースを同梱します。まずこの手順と`Manage.command`を使用してください。既存の日本語の開始・停止ショートカットは任意のSketchyBar構成用で、今回の導入には不要です。
 
 
-**GitHubのソースZIPと配布ZIPは別です。** GitHubの**Code → Download ZIP**にはコンパイル済みの`stats`、`MANIFEST.json`、`BUILD-INFO.json`は含まれません。実行ファイル入りの配布ZIPはまだアップロードしていません。ソースから取得した場合はビルド手順を使用し、`Manage.command`はビルド済みの配布パッケージから実行してください。
+**GitHubのソースZIPと配布ZIPは別です。** GitHubの**Code → Download ZIP**にはコンパイル済みの`stats`、`MANIFEST.json`、`BUILD-INFO.json`は含まれません。実行ファイル入りのApple Silicon版ZIPとチェックサムは、[v0.1.0-preview.1プレリリース](https://github.com/panna-elec/widget-design-original-cp/releases/tag/v0.1.0-preview.1)から取得できます。ソースから取得した場合はビルド手順を使用し、`Manage.command`はビルド済みの配布パッケージから実行してください。
 
 **START-HERE.html**をダブルクリックすると、オフラインで読めるマニュアルがブラウザーで開きます。サーバー・アカウント・専用の文書アプリは不要です。日本語またはEnglishを選び、紙やPDFにする場合はブラウザーの「プリント」を使います。画像とリンクを保つため、展開フォルダを一式保持してください。
 
@@ -116,7 +116,8 @@ bash Manage.command restore --backup-id 表示されたバックアップID
 Xcode Command Line Toolsを導入して、展開フォルダから次を実行します。
 
 ```sh
-python3 scripts/build-distribution.py --version 0.1.0-preview.1 --source-base 8fb0c6624143ee59058011e52c6fcd984f9efb81 --output ./exports-rebuilt
+WIDGET_SOURCE_COMMIT="$(python3 -c "import json; print(json.load(open('BUILD-INFO.json'))['sourceBaseCommit'])")"
+python3 scripts/build-distribution.py --version 0.1.0-preview.1 --source-base "$WIDGET_SOURCE_COMMIT" --output ./exports-rebuilt
 ```
 
 明示リスト`distribution/files.json`だけを梱包し、`native/Stats.swift`を`arm64-apple-macos13.0`向けにコンパイル・アドホック署名してZIPとSHA-256を作ります。アップロード・インストール・既存成果物の上書きはしません。コンパイラやSDKによってバイナリは変わり、異なるツールチェーン間のバイト一致は保証しません。

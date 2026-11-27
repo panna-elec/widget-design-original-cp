@@ -1,8 +1,8 @@
 # Apple Silicon package validation / 配布候補の検証
 
-Candidate: `0.1.0-preview.1` · Date: 2026-11-27 · Local preparation only.
+Prerelease: `0.1.0-preview.1` · Validation date: 2026-11-27.
 
-The ZIP is a preview candidate, not a published or notarized release. No GitHub upload or visibility change was performed. The running widget and personal data were left in place.
+This document records the local validation preceding the Apple Silicon prerelease. The release remains ad-hoc signed and not notarized; publishing it does not turn the untested cases below into passed checks. The running widget and personal data were left in place.
 
 ## Environment / 環境
 

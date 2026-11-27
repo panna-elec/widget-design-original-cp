@@ -101,9 +101,9 @@ python3 -m http.server 8767 --bind 127.0.0.1
 
 ## Apple Silicon向けZIP
 
-`0.1.0-preview.1`の配布候補をローカルで準備しました。実行ファイル・完全な対応ソース・SHA-256・英日導入手順を同梱します。**GitHub Releaseには未アップロードです。** ZIPを受け取った場合は[START-HERE.html](START-HERE.html)で英日図解付きのオフラインマニュアルを開き、その後に`Manage.command`を使います。[日本語のテキスト版](INSTALL.ja.md) / [English](INSTALL.md)も同梱します。
+Apple Silicon向けの`0.1.0-preview.1`プレリリースです。実行ファイル・完全な対応ソース・SHA-256・英日図解付きマニュアルを同梱します。[配布ZIPをダウンロード](https://github.com/panna-elec/widget-design-original-cp/releases/download/v0.1.0-preview.1/widget-design-0.1.0-preview.1-macos-arm64.zip)、または[Releaseページ](https://github.com/panna-elec/widget-design-original-cp/releases/tag/v0.1.0-preview.1)から取得してください。展開後は**START-HERE.html**をブラウザーで開いて手順を読み、その後に`Manage.command`を使います。[日本語のテキスト版](INSTALL.ja.md) / [English](INSTALL.md)も参照できます。
 
-**GitHubのソースZIPと配布ZIPは別です。** GitHubの**Code → Download ZIP**にはコンパイル済みの`stats`、`MANIFEST.json`、`BUILD-INFO.json`は含まれません。実行ファイル入りの配布ZIPはまだアップロードしていません。ソースから取得した場合はビルド手順を使用し、`Manage.command`はビルド済みの配布パッケージから実行してください。
+**GitHubのソースZIPと配布ZIPは別です。** GitHubの**Code → Download ZIP**にはコンパイル済みの`stats`、`MANIFEST.json`、`BUILD-INFO.json`は含まれません。実行ファイル入りのApple Silicon版ZIPとチェックサムは、[v0.1.0-preview.1プレリリース](https://github.com/panna-elec/widget-design-original-cp/releases/tag/v0.1.0-preview.1)から取得できます。ソースから取得した場合はビルド手順を使用し、`Manage.command`はビルド済みの配布パッケージから実行してください。
 
 macOS 13以降向けにビルドし、macOS 26.6.1・Übersicht 1.6（build 82）・Python 3.13.18で確認しました。ÜbersichtとPython 3.10以上は別途必要で、Pythonの場所は自動検出します。Node.jsやSwift、SketchyBarは通常のZIP導入には不要です。実行ファイルはアドホック署名のみで、Developer ID署名・Apple公証はありません。別のMacと実ダウンロード時の確認は残っています。[確認結果](distribution/VALIDATION.md)を参照してください。
 

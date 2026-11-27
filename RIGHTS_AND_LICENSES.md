@@ -109,3 +109,10 @@ README.mdを英語標準版、README.ja.mdを日本語版に整理。概要・�
 準備後のユーザーの明示依頼により、配布用ツール・英日図解とマニュアル・関連文書を、既存Publicリポジトリwidget-design-original-cpのmainへの送信対象とします。前節までの「ローカルのみ」「送信しない」は準備時点の記録です。今回も実行ファイル入りZIP・チェックサムのReleaseアップロード、タグ作成、Pages、公開範囲の変更、mypageの更新、稼働中ウィジェットの変更は対象外です。
 
 GitHubのソースZIPとローカルの配布ZIPの違いを英日README・導入手順へ明記。配布候補ZIPは準備時点の対応ソースとハッシュを保持し、今回の文書追記を同じZIPへ反映済みとは扱いません。素材の権利条件は変更せず、画像の来歴・原文・台帳を保持します。
+
+
+## Apple Siliconプレリリース公開（2026-11-27）
+
+今回の明示依頼は、機密・個人情報の最終確認後にv0.1.0-preview.1をGitHub Releaseへ公開する操作を含みます。前節までのRelease未許可・未アップロードは当時の記録です。公開対象はwidget-design-original-cpのApple Silicon ZIP、SHA-256、対応ソースと英日Release案内。mypage、稼働中ウィジェット、Pages、既存バックアップは変更しません。
+
+公開用タグのソースからZIPをビルドし、BUILD-INFO.jsonとMANIFEST.jsonで対応を照合します。未公証・Gatekeeper評価の拒否・別のMacでの初回承認経路等の未確認事項をReleaseにも明記し、プレリリース扱いとします。ライセンス原文、対象表、生成画像の来歴・CC BYと第三者例外を維持します。

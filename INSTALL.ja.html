@@ -17,8 +17,8 @@
 </ul></li>
 </ul></details><h1 id="widget-design-導入手順--apple-siliconプレビュー版">Widget Design 導入手順 — Apple Siliconプレビュー版</h1>
 <p><a href="INSTALL.html">English</a> | <strong>日本語</strong></p>
-<p>パッケージ版: <code>0.1.0-preview.1</code>。ローカルで準備したRelease候補で、GitHub Releaseには未アップロードです。arm64版の実行ファイルと完全な対応ソースを同梱します。まずこの手順と<code>Manage.command</code>を使用してください。既存の日本語の開始・停止ショートカットは任意のSketchyBar構成用で、今回の導入には不要です。</p>
-<p><strong>GitHubのソースZIPと配布ZIPは別です。</strong> GitHubの<strong>Code → Download ZIP</strong>にはコンパイル済みの<code>stats</code>、<code>MANIFEST.json</code>、<code>BUILD-INFO.json</code>は含まれません。実行ファイル入りの配布ZIPはまだアップロードしていません。ソースから取得した場合はビルド手順を使用し、<code>Manage.command</code>はビルド済みの配布パッケージから実行してください。</p>
+<p>パッケージ版: <code>0.1.0-preview.1</code>。<a href="https://github.com/panna-elec/widget-design-original-cp/releases/tag/v0.1.0-preview.1">Apple Silicon向けのプレリリース</a>です。Apple公証済みの正式版ではありません。arm64版の実行ファイルと完全な対応ソースを同梱します。まずこの手順と`Manage.command`を使用してください。既存の日本語の開始・停止ショートカットは任意のSketchyBar構成用で、今回の導入には不要です。</p>
+<p><strong>GitHubのソースZIPと配布ZIPは別です。</strong> GitHubの<strong>Code → Download ZIP</strong>にはコンパイル済みの<code>stats</code>、<code>MANIFEST.json</code>、<code>BUILD-INFO.json</code>は含まれません。実行ファイル入りのApple Silicon版ZIPとチェックサムは、<a href="https://github.com/panna-elec/widget-design-original-cp/releases/tag/v0.1.0-preview.1">v0.1.0-preview.1プレリリース</a>から取得できます。ソースから取得した場合はビルド手順を使用し、`Manage.command`はビルド済みの配布パッケージから実行してください。</p>
 <p><strong>START-HERE.html</strong>をダブルクリックすると、オフラインで読めるマニュアルがブラウザーで開きます。サーバー・アカウント・専用の文書アプリは不要です。日本語またはEnglishを選び、紙やPDFにする場合はブラウザーの「プリント」を使います。画像とリンクを保つため、展開フォルダを一式保持してください。</p>
 <p><a href="docs/manual/quickstart-ja.png">図解を原寸で開く</a></p>
 <p><img src="docs/manual/quickstart-ja.png" alt="準備、ZIPの確認と展開、確認と導入、警告時の入手元確認と個別許可、表示確認、マニュアルで停止・復元するまでの6段階。" /></p>
@@ -129,7 +129,8 @@
 <h2 id="同梱ソースからビルド">同梱ソースからビルド</h2>
 <p>ソース、テスト、ライセンス原文、ビルド・導入スクリプトはZIP内にリポジトリと同じ構成で含まれています。非公開URLや追加のソース請求は不要です。<code>BUILD-INFO.json</code>に基点コミット・未コミット変更を含む各ソースのSHA-256・コンパイラ・ターゲット・実行ファイルのSHAを記録します。<code>MANIFEST.json</code>は配布ファイルを網羅します。基点コミットだけで今回のローカル変更を再現できるという意味ではありません。</p>
 <p>Xcode Command Line Toolsを導入して、展開フォルダから次を実行します。</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> scripts/build-distribution.py <span class="at">--version</span> 0.1.0-preview.1 <span class="at">--source-base</span> 8fb0c6624143ee59058011e52c6fcd984f9efb81 <span class="at">--output</span> ./exports-rebuilt</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="va">WIDGET_SOURCE_COMMIT</span><span class="op">=</span><span class="st">&quot;</span><span class="va">$(</span><span class="ex">python3</span> <span class="at">-c</span> <span class="st">&quot;import json; print(json.load(open(&#39;BUILD-INFO.json&#39;))[&#39;sourceBaseCommit&#39;])&quot;</span><span class="va">)</span><span class="st">&quot;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> scripts/build-distribution.py <span class="at">--version</span> 0.1.0-preview.1 <span class="at">--source-base</span> <span class="st">&quot;</span><span class="va">$WIDGET_SOURCE_COMMIT</span><span class="st">&quot;</span> <span class="at">--output</span> ./exports-rebuilt</span></code></pre></div>
 <p>明示リスト<code>distribution/files.json</code>だけを梱包し、<code>native/Stats.swift</code>を<code>arm64-apple-macos13.0</code>向けにコンパイル・アドホック署名してZIPとSHA-256を作ります。アップロード・インストール・既存成果物の上書きはしません。コンパイラやSDKによってバイナリは変わり、異なるツールチェーン間のバイト一致は保証しません。</p>
 <p>実行ファイル単体のソースビルドは次です（配布マニフェストを検証する更新経路とは別）。</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">swiftc</span> <span class="at">-O</span> <span class="at">-target</span> arm64-apple-macos13.0 native/Stats.swift <span class="at">-o</span> cyberdeck.widget/bin/stats</span>
