@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 panna-elec
+// SPDX-License-Identifier: GPL-3.0-or-later
+// This grant includes the embedded koi SVG; see LICENSE_SCOPE.md.
 // Original vector interpretation of the user-provided curved koi illustration.
 // No filled silhouette: only faint guides and a few traveling contour highlights.
 const contours = [

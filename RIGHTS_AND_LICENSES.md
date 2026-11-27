@@ -1,6 +1,6 @@
 # 参考元・素材・ライセンス
 
-この文書は、同梱したものと制作時の参考・実行環境を区別するための記録です。プロジェクト全体にMIT、GPL等の一括ライセンスは付与していません。現在の用途はPrivateリポジトリでの保存準備であり、一般公開・第三者への配布が確認済みであることを意味しません。
+2026-11-27のユーザー承認により、独自コード・付随文書・組み込みの鯉SVGは[GPL-3.0-or-later](LICENSE)、独立した壁紙・README画像は[CC BY 4.0](LICENSES/CC-BY-4.0.txt)としてローカルへ適用しました。名義はpanna-elec、[LICENSE_SCOPE.md](LICENSE_SCOPE.md)に対象と例外を明記しています。第三者の条件を変更せず、Private管理を維持します。一般公開・実機更新は行っていません。
 
 ## 同梱フォント
 
@@ -17,12 +17,12 @@
 
 DeviconのMITは各ブランドの商標権を付与するものではありません。Swift and the Swift logo are trademarks of Apple Inc. プロジェクト全体への一括ライセンス付与は行いません。
 
-## デザイン・実装の参照元
+## 実行環境と任意の制作参照記録
 
 | 参照元 | 参考にした内容・扱い | 上流の権利情報 |
 | --- | --- | --- |
-| [jrcn1991/theme-cyberkde](https://github.com/jrcn1991/theme-cyberkde) | 配色、角のある枠、パネル、短い起動・文字演出。制作記録上、コード・画像・動画はコピーせずMac用に実装 | [CREDITS.md](https://github.com/jrcn1991/theme-cyberkde/blob/main/CREDITS.md)。主なコードGPL-3.0-or-later、指定された壁紙・アイコンCC BY-SA 4.0。素材ごとに条件が異なる |
-| [felixhageloh/uebersicht](https://github.com/felixhageloh/uebersicht) | 実行ホストとマウス通知・描画層の仕様調査。アプリ本体・上流コードは非同梱 | [GPL v3原文](https://github.com/felixhageloh/uebersicht/blob/master/LICENSE)。利用時は上流の各ファイルの表記も参照 |
+| [jrcn1991/theme-cyberkde](https://github.com/jrcn1991/theme-cyberkde) | 配色、角のある枠、パネル、短い起動・文字演出。制作上の任意の参照記録。コード・素材の転用を示す一致は今回の照合で未検出。必須クレジットとして扱わない | [CREDITS.md](https://github.com/jrcn1991/theme-cyberkde/blob/main/CREDITS.md)。主なコードGPL-3.0-or-later、指定された壁紙・アイコンCC BY-SA 4.0。素材ごとに条件が異なる |
+| [felixhageloh/uebersicht](https://github.com/felixhageloh/uebersicht) | 実行ホストとマウス通知・描画層の仕様調査。アプリ本体・上流コードは非同梱。ただし専用APIを直接利用するため独自コードにGPL-3.0-or-laterを採用 | [GPL v3原文](https://github.com/felixhageloh/uebersicht/blob/master/LICENSE)。利用時は上流の各ファイルの表記も参照 |
 | [FelixKratz/SketchyBar](https://github.com/FelixKratz/SketchyBar) | 任意の上部バーの実行環境と配置仕様調査。設定のみ同梱、アプリ本体は非同梱 | [GPL v3原文](https://github.com/FelixKratz/SketchyBar/blob/master/LICENSE.md) |
 | [panna-elec/panna-elec-mypage](https://github.com/panna-elec/panna-elec-mypage) | 手元のver2の文字化け・横帯・選択線を参考に新規実装。画像・音・フォント・vendor CSSは移植していない | 制作時の参照記録は[ASSETS.md](ASSETS.md)。第三者CSSの条件を本リポジトリへ流用していない |
 | [Apple Darwin XNU](https://github.com/apple/darwin-xnu/blob/main/bsd/net/rtsock.c) / macOS SDK | ネットワーク統計APIの構造確認。参照先ソースは非同梱 | 上流の対象ファイルに記載された権利表示を参照 |
@@ -35,7 +35,7 @@ CyberKDEのコード・素材の区別と上記実行ホストのLICENSEは2026-
 
 幾何学的な壁紙のSVGはコードで制作し、PNGは作業用の`@resvg/resvg-js`で変換した記録があります。変換ツール本体は同梱していません。
 
-鯉のSVG輪郭はユーザー提供画像の姿勢を参考にした派生表現です。提供画像や生成ラスタ画像は同梱していません。元画像の名前・SHA-256・制作過程は[ASSETS.md](ASSETS.md)に記録しています。出所の記録と、独占的著作権・第三者権利の非侵害保証は別であり、一般公開・再配布の権利確認は未完了です。
+鯉のSVG輪郭はpanna-elecがOpenAIの画像生成機能で制作した鯉の姿勢を参考にした表現です。元画像のSHA-256はmypageの制作時画像と一致し、生成記録 `04-electric-koi` とAI生成来歴を2026-11-27に照合しました。元ラスタ画像は同梱していません。出所確認は完了しましたが、独占的著作権・第三者権利の非侵害保証とは別です。組み込みSVGはGPL対象、READMEの独立画像はCC BY対象として明示しました。詳細は[ASSETS.md](ASSETS.md)。
 
 `original cp`はこの制作物の管理用タイトルです。すべての表現が他作品と無関係、または権利処理済みであることを表すものではありません。
 
@@ -50,3 +50,17 @@ CyberKDEのコード・素材の区別と上記実行ホストのLICENSEは2026-
 ## READMEの画面キャプチャ
 
 [docs/media](docs/media/README.md)のJPEG・GIFは、この実装のプレビューを撮影した説明用媒体。既存の壁紙・鯉の参考表現・同梱フォントを含み、これらの権利条件・未確認事項を引き継ぐ。画像生成で作ったUIやユーザーの実デスクトップ画面は含めていない。
+
+
+## CyberKDEとÜbersichtの扱い（2026-11-27）
+
+CyberKDEは制作上の刺激となった参考作品であり、今回の比較で独自コード・画像の転載を示す一致は検出していない。アイデアだけを参考にした独立実装という前提なら、GPL/CC BY-SAによる必須の出典表示とは扱わない。制作経緯を隠したり、同梱しているOFL等の第三者表示を削除したりするものではない。
+
+Übersichtは公式READMEでGPL-3.0-or-later。現在のウィジェットは`run`、同一DOMへの描画、ネイティブ通知等を使うため、単なる別プロセス利用とは区別する。自作コードへのMITはGPL互換の選択肢だが、ホストや結合物をMITへ置き換えることにはならない。GPL-3.0-or-laterを採用し、原文・名義・適用範囲・対応ソースの説明を整備しました。採用までの比較を[LICENSE_REVIEW.md](docs/LICENSE_REVIEW.md)へ記録した。例外許諾や権利者の個別回答を得たとは報告しない。
+
+
+## 英語・日本語READMEとPrivate更新（2026-11-27）
+
+README.mdを英語標準版、README.ja.mdを日本語版に整理。概要・画像、機能、技術スタック、起動・操作、構成、確認済み環境と検証範囲、対象別ライセンス、関連文書を案内する。素材本体は変更せず、既存の画像・技術アイコンとその出典を再利用する。
+
+ユーザーから、このライセンス・関連文書・READMEの更新を個人情報確認後に既存のPrivateリポジトリへ反映する指示を受けた。以前の「送信なし」「ローカルのみ」は各作業時点の履歴であり、今回の送信許可と区別する。Public化・Pages・Release・外部ホスティング・実機更新は対象外。

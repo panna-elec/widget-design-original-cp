@@ -4,3 +4,9 @@ cyberdeck.widget/lib/fonts/OFL-*.txt -text -whitespace
 *.ttf binary
 *.jpg binary
 *.gif binary
+
+# License originals and distribution copies
+LICENSE -text -whitespace
+LICENSES/*.txt -text -whitespace
+**/licenses/*.txt -text -whitespace
+**/LICENSE -text -whitespace
