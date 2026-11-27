@@ -42,10 +42,14 @@ swiftc -O native/Stats.swift -o cyberdeck.widget/bin/stats
 
 ## 公開準備の文書確認（2026-11-27）
 
+> 過去の記録: ライセンス整備時点の検証。後続の`34ab847`でPrivate反映済み。後段の言語・通信機能は別途実機へ反映しており、ここでの「未実施」は当時の範囲を示す。
+
 コード・画像・音源・フォントを変更せず、ライセンス調査・鯉の出所・台帳・READMEを更新。権利文書のローカル参照先、素材台帳45件のSHA、個人情報・秘密情報の代表パターンを確認済み。リンク欠落・ハッシュ不一致・個人情報パターンの検出なし。従来の自動テスト成功を新規導入や未知の環境の実機確認と混同しない。今回、実機インストール、Finder設定変更、実行中ウィジェットへの反映は行っていない。
 
 
 ## ライセンス適用後のローカル検証（2026-11-27）
+
+> 過去の記録: ライセンス整備時点の検証。後続の`34ab847`でPrivate反映済み。後段の言語・通信機能は別途実機へ反映しており、ここでの「未実施」は当時の範囲を示す。
 
 - 独自コード・付随文書・koi.js内SVGにGPL-3.0-or-later、指定された独立画像にCC BY 4.0を適用。GPL原文はGNU提供本文、CC原文はSPDX提供本文とバイト一致。導入フォルダー内のコピーも一致し、取得元・SHAをLICENSES/SOURCES.mdに記録。
 - 素材台帳52件のSHA、変更文書のローカル参照先、package.jsonのGPL表記とprivate:trueを確認。
@@ -72,7 +76,7 @@ swiftc -O native/Stats.swift -o cyberdeck.widget/bin/stats
 - Connected a browser to the running Übersicht engine (not a demo or mock). Verified live SSD/power readings, Japanese → English save, English persistence after reload, and English → Japanese save. The widget remains ON. Subsequent language selections were observed and left untouched.
 - Compared private state against the backup: tasks, links, layout and all previous settings were unchanged. Only the language field and revision differed. Additional language selections were observed after the test and left untouched. No personal state or desktop screenshots were added to this repository.
 - The external browser reported Übersicht host-only `webkit.messageHandlers` errors; the tested language-save path succeeded. Direct desktop WKWebView clicking/visual verification remains unverified.
-- No Git commit, GitHub upload or publication was performed.
+- No Git commit or upload was performed at this installation-check stage. The feature was subsequently uploaded privately in `c75de52`; no public publication has been performed.
 
 
 ### Language scope correction
@@ -91,9 +95,9 @@ swiftc -O native/Stats.swift -o cyberdeck.widget/bin/stats
 - USB, wired, Bluetooth and cellular hardware transitions remain unverified; their classification branches were tested with synthetic inputs. Wi-Fi hotspot versus router discrimination is intentionally not implemented.
 
 - Installation follow-up: backed up and updated the repository, ON-shortcut source and installed widget; rebuilt the matching native collector. The real Übersicht engine showed `接続：Wi-Fi`, live receive/send values and a matching Wi-Fi breakdown. Original CHRONO/SYSTEM/MEMORY labels were present in Japanese mode. Runtime source/binary hashes match and user state was unchanged. ON is retained; direct desktop WKWebView interaction remains unverified.
-- API references: [Apple network interface types](https://developer.apple.com/documentation/systemconfiguration/network-interface-types), [SCNetworkInterfaceCopyAll](https://developer.apple.com/documentation/SystemConfiguration/SCNetworkInterfaceCopyAll%28%29). No GitHub upload or publication.
+- API references: [Apple network interface types](https://developer.apple.com/documentation/systemconfiguration/network-interface-types), [SCNetworkInterfaceCopyAll](https://developer.apple.com/documentation/SystemConfiguration/SCNetworkInterfaceCopyAll%28%29). No upload at this check stage; the feature was subsequently uploaded privately in `c75de52`. No public publication.
 
 
 ## Language, connection types and English media refresh (2026-11-27)
 
-最新版の英語プレビューを1440×1080で収録。Calendar、English選択状態、Effectsの保存、Wi-Fiと方式別通信量の表示を確認。最終GIFは1080×810、45フレーム9.08秒と83フレーム17.40秒。数値・接続方式は仮データであり、実機のハードウェア切替確認とは区別する。Python 15テスト、JavaScriptの計測・通信・分類・モデル・リソース・ネイティブ接続チェックが再実行で成功。以前の「GitHub送信なし」は各検証時点の記録。今回のユーザー依頼は機能変更と更新媒体のPrivate送信を含む。
+最新版の英語プレビューを1440×1080で収録。Calendar、English選択状態、Effectsの保存、Wi-Fiと方式別通信量の表示を確認。最終GIFは1080×810、45フレーム9.08秒と83フレーム17.40秒。数値・接続方式は仮データであり、実機のハードウェア切替確認とは区別する。Python 15テスト、JavaScriptの計測・通信・分類・モデル・リソース・ネイティブ接続チェックが再実行で成功。以前の「GitHub送信なし」は各検証時点の記録。機能変更と更新媒体は、ユーザーの明示依頼により`c75de52`でPrivate反映済み。

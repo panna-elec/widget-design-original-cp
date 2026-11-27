@@ -2,7 +2,7 @@
 
 現在の状態（2026-11-27）: 既存リポジトリへのPrivate保存は完了済み。以下は初回準備時の履歴であり、現在も未アップロードという意味ではありません。公開前の最新確認は[ライセンス調査](LICENSE_REVIEW.md)と[権利記録](../RIGHTS_AND_LICENSES.md)を参照してください。
 
-- 保存先予定: `panna-elec/widget-design-original-cp`
+- 初回準備時の保存先（現在の更新先）: `panna-elec/widget-design-original-cp`
 - README表題: `widget-design (original cp)`
 - 可視性: Private。Pages・Release・外部公開は設定しない。
 - 準備完了時点: ローカル準備のみ。以降、ユーザーから最終確認後のPrivateアップロードを依頼済み。

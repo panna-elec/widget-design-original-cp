@@ -42,7 +42,7 @@ SketchyBar 2.24.1を公式FelixKratz/formulaeのHomebrew tapから導入。https
 
 参照: https://github.com/panna-elec/panna-elec-mypage の手元の現行ver2。EFFECTS.md、banner-signal.js、interaction-effects.js / .css、terminal-effects.js / .css、alddesign-integration.jsと権利記録を確認。文字化け、横帯、選択線という表現をMac用に新規実装しました。signal-effects.js / .cssが今回の追加ファイルです。
 
-マイページの画像・音源・フォント・vendor CSSはコピーしていません。第三者のCSSコードの移植や新規ライブラリ追加もありません。追加ファイルはasset-inventory.csvにSHA-256付きで記録。ローカル試作であり配布ライセンスは未設定。GitHubの内容取得は失敗したためリモート版との一致は未確認です。
+マイページの画像・音源・フォント・vendor CSSはコピーしていません。第三者のCSSコードの移植や新規ライブラリ追加もありません。追加ファイルはasset-inventory.csvにSHA-256付きで記録。この試作時点では配布ライセンス未設定、GitHub取得も失敗していた。現在は対象別許諾を整備し、既存Privateリポジトリへ反映済み。
 
 自動点滅調整: 既存signal-effects.js / .cssの周期と独自CSS装飾ラインを更新。追加素材なし。台帳のSHA-256を更新し、変更前はbackups/へ保存。
 
@@ -68,7 +68,7 @@ SSD／電源取得、収納・タスク・配置・保存、粒子、残量配�
 
 ## 鯉の輪郭・配色候補・鑑賞モード（2026-11-25）
 
-lib/koi.jsはユーザー提供の鯉画像の姿勢を参考に手作業で作成したSVG輪郭。ユーザーが承認した暗い光の画像案を参考に、短い光と残光をCSSで動かします。提供画像・生成ラスタ画像は実行用ウィジェットへ同梱していません。元画像の形を参照した派生表現であり、第三者権利の非侵害や独占的著作権を保証せず、2026-11-27に下記元画像のAI生成記録を照合し出所を確認済み。第三者向けの再利用許諾は未設定。プロジェクト全体に新たなライセンスを付与していません。
+lib/koi.jsはユーザー提供の鯉画像の姿勢を参考に手作業で作成したSVG輪郭。ユーザーが承認した暗い光の画像案を参考に、短い光と残光をCSSで動かします。提供画像・生成ラスタ画像は実行用ウィジェットへ同梱していません。元画像の形を参照した派生表現であり、第三者権利の非侵害や独占的著作権を保証せず、2026-11-27に下記元画像のAI生成記録を照合し出所を確認済み。この制作時点では再利用許諾未設定。その後、koi.js内の図案を含めGPL-3.0-or-later、指定した独立画像をCC BY 4.0で許諾済み。
 
 元画像名: ChatGPT 画像 2026年11月16日 05_51_29.png
 元画像SHA-256: 57a1a2d62acd18ab677cd631e2e1f2779242b9232e6061fce407e2476b47b305
@@ -93,12 +93,12 @@ HTML/CSS/JavaScript/Swift/Python/Node.jsの6アイコンをDevicon固定コミ�
 
 元画像SHA-256 `57a1a2d62acd18ab677cd631e2e1f2779242b9232e6061fce407e2476b47b305` は、mypageの旧制作画像 `04-electric-koi.png` と一致。mypageの `docs/provenance/avatar/generation-prompts.json` の `04-electric-koi`、C2PAのAI生成来歴と照合済み。制作主体はpanna-elec、生成機能はOpenAI。確認した来歴を記載し、旧画像本体や旧Git履歴はこのリポジトリへ持ち込まない。SVG・アニメーションは既存実装のままで、図案の再利用条件や独占性を新たに保証していない。
 
-CyberKDEは任意の制作参照記録として保持する。2026-11-27の固定コミット照合では独自コード・画像の転用を示す一致を検出せず、共通のGoogle FontsとOFLのみ一致した。READMEから必須クレジットに見える紹介を外した。詳しい比較範囲・限界・Übersichtとのライセンス関係は[調査文書](docs/LICENSE_REVIEW.md)参照。過去の「ローカルのみ」「配布未確認」はその時点の経緯であり、現在はPrivate保存済み。後段の明示承認によりGPL-3.0-or-later／CC BY 4.0をローカル適用した。
+CyberKDEは任意の制作参照記録として保持する。2026-11-27の固定コミット照合では独自コード・画像の転用を示す一致を検出せず、共通のGoogle FontsとOFLのみ一致した。READMEから必須クレジットに見える紹介を外した。詳しい比較範囲・限界・Übersichtとのライセンス関係は[調査文書](docs/LICENSE_REVIEW.md)参照。過去の「ローカルのみ」「配布未確認」はその時点の経緯であり、現在はPrivate保存済み。後段の明示承認によりGPL-3.0-or-later／CC BY 4.0を適用し、`34ab847`でPrivateへ反映済み。
 
 
 ## ユーザー承認によるライセンス適用（2026-11-27）
 
-独自コード・付随する独自文書・koi.js内の鯉SVGをGPL-3.0-or-laterで許諾。独立した壁紙3種（SVGとPNG）とREADMEのJPEG2枚・GIF2本はCC BY 4.0。名義はpanna-elec、許諾できる権利の範囲で適用。フォントOFL・Devicon MIT・商標条件は保持。ここより前の「未設定」「未付与」は選択前の履歴であり、現在は[LICENSE_SCOPE.md](LICENSE_SCOPE.md)を優先する。画像・フォント・壁紙本体は変更していない。GitHub送信・公開・実機更新なし。
+独自コード・付随する独自文書・koi.js内の鯉SVGをGPL-3.0-or-laterで許諾。独立した壁紙3種（SVGとPNG）とREADMEのJPEG2枚・GIF2本はCC BY 4.0。名義はpanna-elec、許諾できる権利の範囲で適用。フォントOFL・Devicon MIT・商標条件は保持。ここより前の「未設定」「未付与」は選択前の履歴であり、現在は[LICENSE_SCOPE.md](LICENSE_SCOPE.md)を優先する。ライセンス整備時には画像・フォント・壁紙本体を変更せず、その後`34ab847`でPrivateへ反映した。後続の英語デモ画像の差し替えは`c75de52`に記録。一般公開は未実施。
 
 
 ## Language, connection types and English media refresh (2026-11-27)
