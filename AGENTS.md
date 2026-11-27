@@ -1,6 +1,6 @@
 # 作業ルール — widget-design (original cp)
 
-- 管理名義はpanna-elec。GitHub保存先はwidget-design-original-cp、Privateを維持する。
+- 管理名義はpanna-elec。GitHub保存先はwidget-design-original-cp。2026-11-27の明示依頼により、このリポジトリのソースコードをPublicで公開する。mypageのPrivate設定は維持する。
 - 「準備して」はローカル作業まで。アップロード、Publicへの変更、Pagesや別サービスへの公開はそれぞれ明示的な依頼が必要。
 - Codexの既存「Githubデザイン」プロジェクト・チャット、マイページのリポジトリ、元のウィジェット制作フォルダを削除・移動・改名しない。
 - 動作中のウィジェットは別の導入先。リポジトリの編集だけで実機を自動更新しない。実機更新はユーザーの依頼範囲に従う。

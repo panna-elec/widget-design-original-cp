@@ -1,6 +1,6 @@
 # 公開前ライセンス調査（2026-11-27）
 
-対象: `widget-design-original-cp` の `0b612fd`。以下はライセンス選択前の調査記録。後続の2026-11-27の明示承認により案Aを採用し、独自コード・付随文書・組み込みの鯉SVGへGPL-3.0-or-later、独立画像へCC BY 4.0を適用し、`34ab847`でPrivate反映済み。[現在の対象表](../LICENSE_SCOPE.md)を参照。一般公開は未実施。英日READMEから任意の参考作品紹介を除いた修正も`ca22f05`でPrivate反映済み。
+対象: `widget-design-original-cp` の `0b612fd`。以下はライセンス選択前の調査記録。後続の2026-11-27の明示承認により案Aを採用し、独自コード・付随文書・組み込みの鯉SVGへGPL-3.0-or-later、独立画像へCC BY 4.0を適用し、`34ab847`でPrivate反映済み。[現在の対象表](../LICENSE_SCOPE.md)を参照。本調査時点では一般公開は未実施。その後の公開方針は[権利記録](../RIGHTS_AND_LICENSES.md)を参照。英日READMEから任意の参考作品紹介を除いた修正も`ca22f05`でPrivate反映済み。
 
 ## 結論
 

@@ -10,7 +10,7 @@
 
 *実装を動かして撮影したプレビューです。CPU・メモリ・通信などは仮データで、個人のファイルやタスクは使用していません。*
 
-管理名義は **panna-elec**。GitHubでの保存先は [widget-design-original-cp](https://github.com/panna-elec/widget-design-original-cp)、可視性は **Private** です。
+管理名義は **panna-elec**。GitHubでの保存先は [widget-design-original-cp](https://github.com/panna-elec/widget-design-original-cp)、可視性は **Public** です。
 
 [使い始める](SETUP.md) · [技術スタック](#技術スタック) · [構成](#構成) · [検証](VALIDATION.md) · [参考元・権利](RIGHTS_AND_LICENSES.md) · [アップロード前の情報確認](docs/PRIVACY_CHECK.md)
 
@@ -186,4 +186,4 @@ CC BYは作者・出典・ライセンス・変更表示等を条件に、指定
 
 既存のマイページとCodexの「Githubデザイン」を保持するため、この保存用フォルダは独立したコピーです。GitHubへのアップロード・Publicへの変更・Pages公開は、それぞれ明示的な依頼に従います。
 
-README.mdを英語の標準版、README.ja.mdを日本語版として同時に更新します。詳細文書は主に日本語で、第三者ライセンス原文を保持します。GitHubリポジトリはPrivateのままです。
+README.mdを英語の標準版、README.ja.mdを日本語版として同時に更新します。詳細文書は主に日本語で、第三者ライセンス原文を保持します。GitHubリポジトリはPublicのソースコード公開です。GitHub Pages・実行ファイルのRelease配布は行っていません。

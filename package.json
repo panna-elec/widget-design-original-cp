@@ -3,6 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Private macOS desktop widget design study by panna-elec",
+  "description": "macOS desktop widget design study by panna-elec",
   "license": "GPL-3.0-or-later"
 }

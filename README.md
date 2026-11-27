@@ -167,6 +167,6 @@ CC BY permits commercial use and adaptation of the specified artwork with attrib
 
 Personal tasks, links and layout are stored under `~/Library/Application Support/Cyberdeck/`, outside Git. Logs, live screenshots, backups and compiled binaries are excluded. See the [privacy checklist](docs/PRIVACY_CHECK.md).
 
-[panna-elec/widget-design-original-cp](https://github.com/panna-elec/widget-design-original-cp) remains **Private**. Uploading code, changing visibility, hosting and updating an installed widget are separate operations. Existing source workspaces and running widgets are preserved.
+[panna-elec/widget-design-original-cp](https://github.com/panna-elec/widget-design-original-cp) is **Public**. This is a source-code repository; GitHub Pages and binary releases are not enabled. Future uploads, visibility changes, hosting and installed-widget updates follow their respective authorization scopes. Existing source workspaces and running widgets are preserved.
 
 Maintain `README.md` in English and `README.ja.md` in Japanese together. Supporting documentation is currently mainly Japanese. [Rights review](RIGHTS_AND_LICENSES.md), [asset provenance](ASSETS.md) and [inventory](asset-inventory.csv) retain detailed records and original third-party notices.

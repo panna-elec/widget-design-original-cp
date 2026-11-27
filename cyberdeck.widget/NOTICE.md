@@ -11,7 +11,7 @@ The original code, configuration and embedded koi SVG in `lib/koi.js` are covere
 
 Exceptions: `lib/wallpaper.svg`, `lib/wallpaper-cyber.svg`, `lib/wallpaper-reference.svg` are independent artwork licensed under [CC BY 4.0](licenses/CC-BY-4.0.txt), by panna-elec. Preserve creator, source, license, disclaimers and change notices. Fonts under `lib/fonts/` retain their own OFL 1.1 licenses and copyright notices. No trademark rights are granted.
 
-Source and full scope: https://github.com/panna-elec/widget-design-original-cp (currently Private).
+Source and full scope: https://github.com/panna-elec/widget-design-original-cp (public source repository).
 A source URL alone is not a substitute for providing corresponding source with a binary distribution. The Swift source for `bin/stats` lives in `native/Stats.swift` in the repository and must be made available with the matching build material when distributing compiled copies. Use the full source repository, not only this installed folder, when preparing a distribution.
 
 This notice and the license texts are included during local installation. No publication or binary release is performed by adding them.

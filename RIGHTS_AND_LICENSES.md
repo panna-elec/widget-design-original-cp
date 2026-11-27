@@ -1,6 +1,6 @@
 # 参考元・素材・ライセンス
 
-2026-11-27のユーザー承認により、独自コード・付随文書・組み込みの鯉SVGは[GPL-3.0-or-later](LICENSE)、独立した壁紙・README画像は[CC BY 4.0](LICENSES/CC-BY-4.0.txt)として適用し、Privateリポジトリへ反映しました。名義はpanna-elec、[LICENSE_SCOPE.md](LICENSE_SCOPE.md)に対象と例外を明記しています。第三者の条件を変更せず、Private管理を維持します。一般公開は未実施です。実機への言語・通信機能の反映は別途の依頼で実施した記録があり、VALIDATION.mdに確認範囲を記載しています。
+2026-11-27のユーザー承認により、独自コード・付随文書・組み込みの鯉SVGは[GPL-3.0-or-later](LICENSE)、独立した壁紙・README画像は[CC BY 4.0](LICENSES/CC-BY-4.0.txt)として適用し、Privateリポジトリへ反映しました。名義はpanna-elec、[LICENSE_SCOPE.md](LICENSE_SCOPE.md)に対象と例外を明記しています。第三者の条件を変更せず、後続の明示依頼によりwidgetのソースコードをGitHubでPublic公開する方針です。mypageはPrivateを維持します。下記のPrivate保存・公開前点検は各作業時点の履歴です。実機への言語・通信機能の反映は別途の依頼で実施した記録があり、VALIDATION.mdに確認範囲を記載しています。
 
 ## 同梱フォント
 
@@ -83,3 +83,12 @@ README.mdを英語標準版、README.ja.mdを日本語版に整理。概要・�
 - GitHubのPrivate・Pages無効を確認。ブランチはmainのみで、タグ・Release・Issue/PR・Actions実行履歴・成果物はいずれもなし。実機の個人設定・ログ・バックアップ・コンパイル済みstatsはGit管理外。
 
 確認範囲でソース公開を止める具体的な権利・個人情報の不備は検出していない。公開操作は別途の明示依頼が必要。新規Mac・Intel・複数画面・実スリープ復帰等は未検証として維持する。実行ファイル入りの配布物を作る際は、対応ソース・ビルド手順・表示を改めて照合する。実機更新の検証記録と、デスクトップWKWebViewでの直接操作が未確認であることを区別する。
+
+
+## ソースコードのPublic公開（2026-11-27）
+
+ユーザーの明示依頼により、公開対象を`panna-elec/widget-design-original-cp`の既存ソースリポジトリに限定する。mypageはPrivateを維持し、旧保管リポジトリ・ローカルバックアップは対象外。GitHub Pages、外部ホスティング、実行ファイル入りRelease、実機の再インストールは今回の対象外。
+
+公開前点検の基点は`423f1b6`。現状説明を英日README・権利文書・作業ルールへ反映する。画像・フォント・実行処理・ライセンス原文は変更しない。`package.json`の`private: true`は意図しないnpm配布を防ぐ設定として保持し、GitHubのPublic/Privateとは別に扱う。
+
+以前の「Public化は対象外」「公開未実施」は、その節の作業時点を示す。今回の明示依頼がwidgetのソース公開を承認する。今後の更新・別の公開先・配布形態への継続許可とは扱わない。
