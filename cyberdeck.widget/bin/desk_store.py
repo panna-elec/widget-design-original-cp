@@ -4,7 +4,7 @@ STATE_DIR=pathlib.Path.home()/'Library/Application Support/Cyberdeck'
 class StateError(ValueError):pass
 
 def initial():
- return dict(version=1,revision=0,tasks=[],shortcuts=[{'id':'finder','label':'Finder','path':'/System/Library/CoreServices/Finder.app','kind':'app'},{'id':'downloads','label':'Downloads','path':str(pathlib.Path.home()/'Downloads'),'kind':'folder'}],layout={},settings={'batteryEffects':True,'particles':True,'koi':True,'koiPalette':'rose','koiPower':False,'koiSize':100,'koiWeight':100,'low':20,'mid':50,'dock':'auto','reserve':72})
+ return dict(version=1,revision=0,tasks=[],shortcuts=[{'id':'finder','label':'Finder','path':'/System/Library/CoreServices/Finder.app','kind':'app'},{'id':'downloads','label':'Downloads','path':str(pathlib.Path.home()/'Downloads'),'kind':'folder'}],layout={},settings={'language':'ja','batteryEffects':True,'particles':True,'koi':True,'koiPalette':'rose','koiPower':False,'koiSize':100,'koiWeight':100,'low':20,'mid':50,'dock':'auto','reserve':72})
 def integer(v,lo,hi):return type(v) is int and lo<=v<=hi
 def text(v,limit):return isinstance(v,str) and 0<len(v.strip())<=limit and '\0' not in v
 def validate(data):
@@ -28,6 +28,7 @@ def validate(data):
     out[key].append(dict(id=item['id'],label=item['label'].strip(),path=str(path),kind=item['kind']))
  settings=data.get('settings',{})
  if not isinstance(settings,dict) or any(type(settings.get(k)) is not bool for k in ['particles','batteryEffects']):raise StateError('演出設定が不正です')
+ if settings.get('language','ja') not in ['ja','en']:raise StateError('表示言語が不正です')
  if not integer(settings.get('low'),5,40) or not integer(settings.get('mid'),settings['low']+5,90):raise StateError('残量の境界値が不正です')
  if settings.get('dock') not in ['auto','bottom','left','right'] or not integer(settings.get('reserve'),24,200):raise StateError('Dock余白が不正です')
  if settings.get('koiPalette','rose') not in ['rose','wine','crimson','mauve','coral','cyan'] or type(settings.get('koiPower',False)) is not bool:raise StateError('鯉の配色設定が不正です')

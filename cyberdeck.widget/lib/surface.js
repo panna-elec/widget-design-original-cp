@@ -5,12 +5,13 @@
   const native = params.get('mode') === 'native' || root.dataset.host === 'native';
   if (native) root.classList.add('native');
   const $ = id => document.getElementById(id);
+  const i18n = window.CyberdeckI18n;
   let settings = {style:native?'clean':'reference',palette:'cyan',layout:'split',motion:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'off':'normal',finder:false};
   let calendarKey = "", nativeConfigured = false;
   const boot = window.CyberdeckBoot;
   let networkHistory = [], history = [], sequence = 0, running = [], demoStep = 0, lastTimestamp = 0;
   const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const text = (id,value) => {const element=$(id), next=String(value), old=element.textContent;element.textContent=next;if((id==='cpu'||id==='memory')&&old!==next&&old!=='—'&&next!=='—'&&window.CyberdeckInteract)window.CyberdeckInteract.highlight(element);};
+  const text = (id,value) => {const element=$(id), next=String(value), old=element.textContent;i18n.text(element,next);if((id==='cpu'||id==='memory')&&old!==next&&old!=='—'&&next!=='—'&&window.CyberdeckInteract)window.CyberdeckInteract.highlight(element);};
   const timeout = (fn, ms) => { const id = setTimeout(fn, ms); running.push(id); };
   function clearEffects() { window.CyberdeckSignal?.stop(); boot.finish(); ++sequence; running.forEach(clearTimeout);running=[];document.querySelectorAll('.decode').forEach(e=>{e.textContent=e.dataset.title;e.classList.remove('glitch')}); }
   function replay() {
@@ -48,18 +49,18 @@
   }
   function clock(){
     const d=new Date();
-    const key=d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate();
+    const key=d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate()+'-'+i18n.language;
     if(key!==calendarKey){
       calendarKey=key;
-      text('calendar-month',new Intl.DateTimeFormat('en-US',{month:'long',year:'numeric'}).format(d).toUpperCase());
+      text('calendar-month',new Intl.DateTimeFormat(i18n.locale,{month:'long',year:'numeric'}).format(d).toUpperCase());
       const first=(new Date(d.getFullYear(),d.getMonth(),1).getDay()+6)%7;
       const count=new Date(d.getFullYear(),d.getMonth()+1,0).getDate();
       const cal=$('calendar');cal.replaceChildren();
-      ['M','T','W','T','F','S','S'].forEach(label=>{const e=document.createElement('span');e.className='calendar-week';e.textContent=label;cal.appendChild(e)});
+      (i18n.language==='ja'?['月','火','水','木','金','土','日']:['M','T','W','T','F','S','S']).forEach(label=>{const e=document.createElement('span');e.className='calendar-week';e.textContent=label;cal.appendChild(e)});
       for(let i=0;i<first+count;i++){const e=document.createElement('span');const n=i-first+1;e.textContent=n>0?n:'';if(n===d.getDate())e.className='today';cal.appendChild(e)}
     }
     text('hours' ,String(d.getHours()).padStart(2,'0'));text('minutes',String(d.getMinutes()).padStart(2,'0'));text('seconds',String(d.getSeconds()).padStart(2,'0'));
-    text('date',new Intl.DateTimeFormat('en-CA',{year:'numeric',month:'2-digit',day:'2-digit'}).format(d));text('weekday',new Intl.DateTimeFormat('en-US',{weekday:'short'}).format(d).toUpperCase());
+    text('date',new Intl.DateTimeFormat(i18n.language==='ja'?'ja-JP':'en-CA',{year:'numeric',month:'2-digit',day:'2-digit'}).format(d));text('weekday',new Intl.DateTimeFormat(i18n.locale,{weekday:'short'}).format(d).toUpperCase());
     text('timezone',Intl.DateTimeFormat().resolvedOptions().timeZone);text('menu-time',d.toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'}));
   }
   function speed(value) {
@@ -67,7 +68,18 @@
     if(value>=1024)return (value/1024).toFixed(1)+' KiB/s';
     return Math.round(value)+' B/s';
   }
+  let lastConnectionRate=null, lastConnectionFailure=null;
+  function renderConnections(rate, failure) {
+    lastConnectionRate=rate;lastConnectionFailure=failure;
+    const names={wifi:'Wi-Fi',wired:'有線LAN',usb:'USB接続',bluetooth:'Bluetooth',cellular:'携帯回線',unknown:'判別不可'};
+    const connections=!failure&&Array.isArray(rate?.connections)?rate.connections:[];
+    const label=kind=>i18n.t(names[kind]||names.unknown);
+    const types=[...new Set(connections.map(item=>label(item.kind)))].join(' + ');
+    i18n.text($('network-connection'),failure?'接続：データ待ち':types?'接続：{types}':rate?.status==='no-interface'?'接続：なし':rate?.status==='ok'?'接続：{types}':'接続：データ待ち',{types:types||label('unknown')});
+    $('connection-rates').textContent=connections.map(item=>label(item.kind)+'  ↓ '+(Number.isFinite(item.rx)?speed(item.rx):'—')+' / ↑ '+(Number.isFinite(item.tx)?speed(item.tx):'—')).join('\n');
+  }
   function network(rate, failure) {
+    renderConnections(rate,failure);
     const valid=!failure && rate && rate.status==='ok' && Number.isFinite(rate.rx) && rate.rx>=0 && Number.isFinite(rate.tx) && rate.tx>=0;
     if(!valid)networkHistory=[];
     else {networkHistory.push([rate.rx,rate.tx]);networkHistory=networkHistory.slice(-36);}
@@ -79,8 +91,8 @@
       $('network-'+field+'-graph').setAttribute('points',networkHistory.map((v,i)=>(i*240/35).toFixed(1)+','+(52-48*v[index]/scale).toFixed(1)).join(' '));
     }
     const status=failure || (!rate?'waiting':rate.status);
-    text('network-state',valid?(native?'実測概算 / Wi-Fi・Ethernet 合計':'DEMO / 仮の通信量'):({error:'取得失敗・次回再試行',stale:'更新停止 / データ待ち',unavailable:'通信量を取得できません','no-interface':'対象の通信インターフェースなし',waiting:'計測中 / 次のサンプル待ち'}[status]||'計測待ち'));
-    text('network-scale',valid?'目盛り上限 '+speed(scale)+' / 自動':'目盛りは通信量に合わせて自動調整');
+    text('network-state',valid?(native?'現在の通信速度 / 対象接続の合計':'DEMO / 仮の通信量'):({error:'取得失敗・次回再試行',stale:'更新停止 / データ待ち',unavailable:'通信量を取得できません','no-interface':'対象の通信インターフェースなし',waiting:'計測中 / 次のサンプル待ち'}[status]||'計測待ち'));
+    i18n.text($('network-scale'),valid?'目盛り上限 {value} / 自動':'目盛りは通信量に合わせて自動調整',{value:speed(scale)});
   }
   function metrics(data){
     if(!data||typeof data!=='object')return;
@@ -105,7 +117,7 @@
   function demo(){
     if(native||document.hidden||settings.motion==='paused')return;
     const cpu=Math.round(22+12*Math.sin(demoStep*.6)+5*Math.cos(demoStep*1.3));demoStep++;
-    metrics({cpu,memoryBytes:(8.2+.3*Math.sin(demoStep*.15))*2**30,totalBytes:16*2**30,networkRate:{rx:(.4+.35*Math.sin(demoStep*.6))*2**20,tx:(30+25*Math.sin(demoStep*.4))*1024,status:'ok'}});
+    metrics({cpu,memoryBytes:(8.2+.3*Math.sin(demoStep*.15))*2**30,totalBytes:16*2**30,networkRate:{rx:(.4+.35*Math.sin(demoStep*.6))*2**20,tx:(30+25*Math.sin(demoStep*.4))*1024,status:'ok',connections:[{kind:'wifi',rx:(.4+.35*Math.sin(demoStep*.6))*2**20,tx:(30+25*Math.sin(demoStep*.4))*1024}]}});
   }
   window.addEventListener('message',event=>{
     if(event.source!==window.parent)return;
@@ -116,6 +128,8 @@
     if(d.type==='signal-preview'&&!native){boot.finish();window.CyberdeckSignal?.play();}
     if(d.type==='metrics'&&native)metrics(d.data);
   });
+  window.addEventListener('cyberdeck-language-changing',clearEffects);
+  window.addEventListener('cyberdeck-language',()=>{clock();renderConnections(lastConnectionRate,lastConnectionFailure);});
   configure(settings);clock();demo();if(!native)replay();
   setInterval(()=>{if(!document.hidden)clock();if(native&&lastTimestamp&&Date.now()-lastTimestamp>20000){network(null,'stale');text('status','更新が止まっています');text('source','STALE');}},1000);
   setInterval(demo,5000);

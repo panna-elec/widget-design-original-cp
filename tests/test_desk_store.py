@@ -35,6 +35,22 @@ class DeskStore(unittest.TestCase):
     for invalid in [True,'100',101,None,{},float('nan')]:
      bad=copy.deepcopy(s);bad['settings'][key]=invalid
      with self.assertRaises(store.StateError):store.validate(bad)
+ def test_language_legacy_roundtrip_and_invalid(self):
+  old=store.initial();old['settings'].pop('language')
+  old['tasks']=[dict(id='keep',text='カレンダー <test>',done=False)]
+  migrated=store.validate(old);self.assertEqual(migrated['settings']['language'],'ja')
+  with tempfile.TemporaryDirectory() as t:
+   directory=pathlib.Path(t);state=migrated
+   for language in ['en','ja','en']:
+    state['settings']['language']=language
+    state=store.save_state(state,state['revision'],directory)
+    loaded=store.read_state(directory)
+    self.assertEqual(loaded,state);self.assertEqual(loaded['tasks'],old['tasks'])
+    self.assertEqual(loaded['shortcuts'],old['shortcuts']);self.assertEqual(loaded['layout'],old['layout'])
+   for invalid in ['fr','EN','',True,None,[],{}]:
+    bad=copy.deepcopy(state);bad['settings']['language']=invalid
+    with self.assertRaises(store.StateError):store.save_state(bad,state['revision'],directory)
+    self.assertEqual(store.read_state(directory),state)
  def test_invalid_limits(self):
   for mutate in [lambda s:s['settings'].update(low=30,mid=20),lambda s:s.update(tasks=[dict(id='a',text='x',done=False)]*2),lambda s:s.update(layout={'bad':{'clock':dict(x=float('nan'),y=0,w=.5,h=.5)}}),lambda s:s['shortcuts'].append(dict(id='x',label='x',kind='folder',path='relative/path'))]:
    s=store.initial();mutate(s)

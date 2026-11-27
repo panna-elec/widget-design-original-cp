@@ -1,0 +1,75 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Widget language regression</title>
+<style>body{font:16px system-ui;background:#111;color:#eee}iframe{width:1100px;height:800px;border:1px solid #888}pre{white-space:pre-wrap}</style>
+<h1>Widget language regression</h1><pre id="results">Running…</pre><iframe id="widget" title="Isolated widget test"></iframe>
+<script type="module">
+import {initialDesk} from '../cyberdeck.widget/lib/desk-model.mjs';
+const frame=document.getElementById('widget'), output=document.getElementById('results'), lines=[];
+const key='cyberdeck-desk-preview-v1', previous=localStorage.getItem(key);
+const controls=['cyberdeck-controls-v1-preview','cyberdeck-controls-v1-desktop'].map(key=>({key,value:localStorage.getItem(key)}));
+const check=(condition,message)=>{if(!condition)throw Error(message);lines.push('PASS: '+message);output.textContent=lines.join('\n');};
+const wait=async predicate=>{const start=Date.now();while(!predicate()){if(Date.now()-start>6000)throw Error('Timed out waiting for widget');await new Promise(resolve=>setTimeout(resolve,20));}};
+const doc=()=>frame.contentDocument, node=id=>doc().getElementById(id), text=id=>node(id).textContent;
+const sample=()=>({cpu:25,memoryBytes:8*2**30,totalBytes:16*2**30,networkRate:{rx:1024,tx:256,status:'ok',connections:[{kind:'wifi',rx:1024,tx:256}]},disk:{free:100*2**30,total:512*2**30},battery:{percent:60,charging:false,external:false},desk:state});
+let state=initialDesk(), reject=false, mode='preview';
+state.tasks=[{id:'literal',text:'カレンダー <img src=x> {task}',done:false}];
+state.shortcuts=[{id:'literal',label:'時計',path:'/Applications/Finder.app',kind:'app'}];
+const post=(type,extra={})=>frame.contentWindow.postMessage({channel:'cyberdeck',type,...extra},location.origin);
+window.addEventListener('message',event=>{
+ if(mode!=='native'||event.source!==frame.contentWindow||event.origin!==location.origin||event.data?.channel!=='cyberdeck')return;
+ const message=event.data;
+ if(['ready','desk-ready'].includes(message.type)){post('settings',{settings:{style:'reference',layout:'left',motion:'off'}});post('metrics',{data:sample()});}
+ if(message.type==='desk-action'){
+  if(message.request.action!=='save')throw Error('Unexpected native action');
+  const conflict=message.request.expected!==state.revision;
+  const result=reject||conflict?{ok:false,error:'別の画面で更新されました。最新データを確認して再操作してください。'}:{ok:true,state:{...structuredClone(message.request.state),revision:state.revision+1}};
+  if(result.ok)state=result.state;
+  post('desk-result',{requestId:message.requestId,result});
+ }
+});
+async function load(native=false){mode=native?'native':'preview';frame.src='../cyberdeck.widget/lib/surface.html?mode='+mode+'&test='+Date.now();await new Promise(resolve=>frame.onload=resolve);await wait(()=>node('display-language')&&!node('display-language').disabled);}
+async function select(language){node('display-language').value=language;node('display-language').dispatchEvent(new Event('change',{bubbles:true}));await wait(()=>!node('display-language').disabled);}
+try{
+ for(const {key} of controls)localStorage.removeItem(key);
+ const legacy=structuredClone(state);delete legacy.settings.language;localStorage.setItem(key,JSON.stringify(legacy));
+ await load();check(doc().documentElement.lang==='ja','legacy preview defaults to Japanese');
+ await wait(()=>doc().querySelector('.clock-panel .decode').textContent==='CHRONO'&&doc().querySelector('.system-panel .decode').textContent==='SYSTEM');
+ check(doc().querySelector('.clock-panel .decode').textContent==='CHRONO'&&doc().querySelector('.system-panel .decode').textContent==='SYSTEM'&&doc().querySelector('.metric-name').textContent==='CPU','original English headings retained in Japanese mode');
+ node('desk-open').click();node('calendar-toggle').click();
+ const points=node('cpu-graph').getAttribute('points');
+ await select('en');
+ check(doc().querySelector('.clock-panel .decode').textContent==='CHRONO'&&doc().querySelector('.system-panel .decode').textContent==='SYSTEM','original headings unchanged in English mode');
+ check(doc().querySelector('.metric small').textContent==='Average across all cores','Japanese sublabel translates to English');
+ check(text('calendar-toggle')==='Calendar'&&text('weekday').length===3,'English clock controls and weekday');
+ check(text('calendar-month').match(/[A-Z]+ \d{4}/),'English calendar month');
+ check(node('cpu-graph').getAttribute('points')===points,'language switch does not add telemetry samples');
+ check(text('task-list').includes('カレンダー <img src=x> {task}')&&!node('task-list').querySelector('img'),'user task is literal and untranslated');
+ check(text('shortcut-list').includes('時計'),'user link label is untranslated');
+ check(node('task-list').querySelector('input').getAttribute('aria-label')==='Complete: カレンダー <img src=x> {task}','accessible task label preserves literal user text');
+ node('task-text').value='unsaved draft';node('koi-size').value='130';
+ await select('ja');check(doc().querySelector('.clock-panel .decode').textContent==='CHRONO'&&doc().querySelector('.metric small').textContent==='全コアの平均','Japanese sublabel restored without translating original heading');await select('en');
+ check(node('task-text').value==='unsaved draft'&&node('koi-size').value==='130','language switch preserves unsaved form values');
+ node('effects-form').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));
+ await wait(()=>text('desk-status')==='Saved');
+ check(JSON.parse(localStorage.getItem(key)).settings.language==='en','saving effects preserves language');
+ await load();check(doc().documentElement.lang==='en','preview reload retains English');
+ node('clock-collapse').click();check(node('clock-collapse').getAttribute('aria-label')==='Expand clock','collapsed control has English accessible label');
+ await select('ja');check(node('clock-collapse').getAttribute('aria-label')==='時計を展開','collapsed control updates its accessible label');
+ // A synthetic native host exercises the real message path without running any OS command.
+ state.settings.language='en';await load(true);
+ check(doc().documentElement.lang==='en'&&text('resource-source').startsWith('LIVE / SSD and power'),'native state language and live labels');
+ check(text('network-state')==='Current traffic / Combined connections','network summary retains aggregate traffic meaning');
+ check(text('network-connection')==='Connection: Wi-Fi'&&text('connection-rates').includes('Wi-Fi'),'live connection type and rate breakdown');
+ post('metrics',{data:{...sample(),networkRate:{rx:2048,tx:512,status:'ok',connections:[{kind:'wired',rx:1024,tx:256},{kind:'usb',rx:1024,tx:256}]}}});
+ await wait(()=>text('network-connection').includes('USB'));check(text('network-connection')==='Connection: Wired LAN + USB','multiple connection types shown');
+ await select('ja');check(text('network-connection')==='接続：有線LAN + USB接続','connection names follow Japanese language without re-measuring');check(state.settings.language==='ja'&&state.tasks[0].text==='カレンダー <img src=x> {task}','native save preserves tasks');
+ await select('en');reject=true;await select('ja');
+ check(node('display-language').value==='en'&&doc().documentElement.lang==='en','rejected native save restores current language');
+ check(text('desk-status').startsWith('Another window updated'),'native conflict error translated');
+ reject=false;state={...state,revision:state.revision+1,settings:{...state.settings,language:'ja'}};post('metrics',{data:sample()});
+ await wait(()=>doc().documentElement.lang==='ja');check(node('display-language').value==='ja','newer native revision updates language');
+ await select('en');await load(true);check(doc().documentElement.lang==='en','native reload receives saved language');
+ check(!doc().querySelectorAll('#task-list img').length,'no user content interpreted as HTML');
+ output.textContent=lines.join('\n')+'\nALL CHECKS PASSED';
+}catch(error){output.textContent=lines.join('\n')+'\nFAIL: '+error.stack;console.error(error);}
+finally{for(const {key,value} of controls){if(value===null)localStorage.removeItem(key);else localStorage.setItem(key,value);}if(previous===null)localStorage.removeItem(key);else localStorage.setItem(key,previous);}
+</script></html>

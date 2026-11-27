@@ -85,7 +85,7 @@
       const button=panel.querySelector('.collapse-control');
       button.setAttribute('aria-expanded',String(!state[field]));
       button.textContent=state[field]?'+':'−';
-      button.setAttribute('aria-label',(panel===clock?'時計':'システム')+(state[field]?'を展開':'を折りたたむ'));
+      window.CyberdeckI18n.attr(button,'aria-label',(panel===clock?'時計':'システム')+(state[field]?'を展開':'を折りたたむ'));
       document.getElementById(id).inert=state[field];
     }
     for(const [field,id,buttonId] of [['calendarOpen','clock-extra','calendar-toggle'],['detailsOpen','system-extra','details-toggle']]) {

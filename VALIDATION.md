@@ -53,3 +53,47 @@ swiftc -O native/Stats.swift -o cyberdeck.widget/bin/stats
 - 今回の変更文書を代表的な個人名・端末パス・秘密鍵・トークンのパターンで確認し、検出なし。過去履歴の再監査は今回の検証には含めない。
 - インストールスクリプトがcyberdeck.widget全体をコピーすることを確認。追加LICENSE・NOTICE・CC原文もコピー対象になる。今回は実機のコピー操作を行っていない。コンパイル済みstatsを第三者へ配布する場合の対応ソース提供手順をSETUP.mdへ明記。
 - ローカル編集のみ。コミット、GitHub送信、公開設定変更、実行中ウィジェットへの反映は行っていない。
+
+
+## Display language (2026-11-27)
+
+- Added a Japanese/English selector under Desk. Saves through the existing revision-checked desk state; old states default to Japanese. Preview storage is separate from native state.
+- Python desk-store tests: 6 passed, including language migration, repeated save/read, invalid choices rejected without overwriting data, and task/link/layout preservation.
+- Existing desk-model, desk-resource, native bridge/pointer, and metrics checks passed. The resource check now tracks the source status message independently of its translated text.
+- Browser regression: 19 checks passed in `tests/language-browser.html`. Covers instant language/calendar changes, unchanged telemetry histories, literal user content, unsaved form preservation, effects saves, reload, accessible collapse labels, simulated native state/save/conflict/newer revision/reload.
+- Visual preview: Japanese and English at the default desktop viewport (829 × 805) and 390 × 844. Desk controls fit and long settings content scrolls. No browser console errors were observed.
+- Run browser checks by serving the repository on a dedicated loopback origin and opening `/tests/language-browser.html`. It temporarily seeds preview state on that origin and restores the prior desk data afterward. Native communication is simulated; no OS command is executed.
+- Initially verified in isolation; the authorized installation follow-up is recorded below. Optional SketchyBar and shell localization remain outside the language feature.
+
+### Authorized local installation follow-up
+
+- Updated both the existing ON-shortcut source and the installed widget. Backed up the earlier widget and private desk state outside this repository. Preserved the existing measurement binary, preferences, startup scripts and font licenses; included the current required license notices.
+- Started with the existing ON command at the user's request. The command completed successfully and the installed widget matches its startup source.
+- Connected a browser to the running Übersicht engine (not a demo or mock). Verified live SSD/power readings, Japanese → English save, English persistence after reload, and English → Japanese save. The widget remains ON. Subsequent language selections were observed and left untouched.
+- Compared private state against the backup: tasks, links, layout and all previous settings were unchanged. Only the language field and revision differed. Additional language selections were observed after the test and left untouched. No personal state or desktop screenshots were added to this repository.
+- The external browser reported Übersicht host-only `webkit.messageHandlers` errors; the tested language-save path succeeded. Direct desktop WKWebView clicking/visual verification remains unverified.
+- No Git commit, GitHub upload or publication was performed.
+
+
+### Language scope correction
+
+- Kept all originally English labels (including CHRONO, SYSTEM, MEMORY and their original heading font) unchanged in both languages. Japanese controls, sublabels and help remain selectable in Japanese/English.
+- Reworded the network summary as current aggregate traffic. Connection classification was then implemented as requested below.
+- Network counters contain interface identifiers and byte totals, not SSIDs, IP addresses or traffic contents. Ethernet in the former label was a generic connection technology, not personal information.
+
+
+### Connection classification
+
+- Added SystemConfiguration interface types and IOKit USB ancestry to the native collector. Output adds only a generic `kind`; no interface service labels, USB properties, device names, SSIDs or addresses are read for classification or emitted. Link state is checked locally to omit connections the OS reports as inactive.
+- Wi-Fi and Wi-Fi tethering both show Wi-Fi. USB network adapters and USB tethering share USB; no phone/router inference. Unsupported types show Unknown. The existing en-interface scope and VPN/bridge exclusions remain.
+- The reducer groups byte deltas by kind. The main rates remain a total; Details shows each kind. First samples, missing data, resets, sleep gaps and changed types remain unavailable instead of false zeroes or spikes.
+- Validation: Swift build and 8 classifier checks; 7 metric, 15 network and 9 connection-type checks; browser regression 27 checks including language, original headings, combined types and translated breakdown labels. A non-sandboxed native sample identified the current connection as Wi-Fi.
+- USB, wired, Bluetooth and cellular hardware transitions remain unverified; their classification branches were tested with synthetic inputs. Wi-Fi hotspot versus router discrimination is intentionally not implemented.
+
+- Installation follow-up: backed up and updated the repository, ON-shortcut source and installed widget; rebuilt the matching native collector. The real Übersicht engine showed `接続：Wi-Fi`, live receive/send values and a matching Wi-Fi breakdown. Original CHRONO/SYSTEM/MEMORY labels were present in Japanese mode. Runtime source/binary hashes match and user state was unchanged. ON is retained; direct desktop WKWebView interaction remains unverified.
+- API references: [Apple network interface types](https://developer.apple.com/documentation/systemconfiguration/network-interface-types), [SCNetworkInterfaceCopyAll](https://developer.apple.com/documentation/SystemConfiguration/SCNetworkInterfaceCopyAll%28%29). No GitHub upload or publication.
+
+
+## Language, connection types and English media refresh (2026-11-27)
+
+最新版の英語プレビューを1440×1080で収録。Calendar、English選択状態、Effectsの保存、Wi-Fiと方式別通信量の表示を確認。最終GIFは1080×810、45フレーム9.08秒と83フレーム17.40秒。数値・接続方式は仮データであり、実機のハードウェア切替確認とは区別する。Python 15テスト、JavaScriptの計測・通信・分類・モデル・リソース・ネイティブ接続チェックが再実行で成功。以前の「GitHub送信なし」は各検証時点の記録。今回のユーザー依頼は機能変更と更新媒体のPrivate送信を含む。

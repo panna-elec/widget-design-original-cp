@@ -16,4 +16,4 @@ export function constrain(rect,bounds){
 export function overlaps(a,b,gap=10){return a.x<b.x+b.w+gap&&a.x+a.w+gap>b.x&&a.y<b.y+b.h+gap&&a.y+a.h+gap>b.y;}
 export function normalize(r,b){return {x:(r.x-b.x)/b.w,y:(r.y-b.y)/b.h,w:r.w/b.w,h:r.h/b.h};}
 export function expand(r,b){return constrain({x:b.x+r.x*b.w,y:b.y+r.y*b.h,w:r.w*b.w,h:r.h*b.h},b);}
-export function initialDesk(){return {version:1,revision:0,tasks:[],shortcuts:[{id:'finder',label:'Finder',path:'/System/Library/CoreServices/Finder.app',kind:'app'}],layout:{},settings:{batteryEffects:true,particles:true,koi:true,koiPalette:'rose',koiPower:false,koiSize:100,koiWeight:100,low:20,mid:50,dock:'auto',reserve:72}};}
+export function initialDesk(){return {version:1,revision:0,tasks:[],shortcuts:[{id:'finder',label:'Finder',path:'/System/Library/CoreServices/Finder.app',kind:'app'}],layout:{},settings:{language:'ja',batteryEffects:true,particles:true,koi:true,koiPalette:'rose',koiPower:false,koiSize:100,koiWeight:100,low:20,mid:50,dock:'auto',reserve:72}};}

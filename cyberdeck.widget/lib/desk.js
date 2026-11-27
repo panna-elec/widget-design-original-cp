@@ -1,12 +1,14 @@
 import {energy,safeArea,constrain,normalize,expand,overlaps,initialDesk} from './desk-model.mjs';
 const root=document.getElementById('surface'), native=root.classList.contains('native'), $=id=>document.getElementById(id);
 const panel=document.querySelector('.desk-panel'), system=document.querySelector('.system-panel'), clock=document.querySelector('.clock-panel');
+const i18n=window.CyberdeckI18n;
 const clone=o=>JSON.parse(JSON.stringify(o)), previewKey='cyberdeck-desk-preview-v1';
 let state=initialDesk(), ready=!native, busy=false, open=false, folded=false, activeTab='resources', taskEdit=null, linkEdit=null, undo=null;
 let latest=null,lastData=0,lastBattery='',lastDisk='',pulseTimer=0,editing=false,draft=null,layoutFallback=false,screenKey='',automaticDock={edge:'bottom',reserve:72};
 const pending=new Map(), selectedPanels={clock,system,desk:panel};
 try{if(!native){const saved=JSON.parse(localStorage.getItem(previewKey));if(saved?.version===1&&saved.settings&&Array.isArray(saved.tasks))state=saved;}}catch(_){}
-function status(message){$('desk-status').textContent=message;}
+let statusSource='';
+function status(message){statusSource=message;i18n.text($('desk-status'),message);}
 function post(type,extra={}){parent.postMessage({channel:'cyberdeck',type,...extra},location.origin);}
 function request(request){
  if(!native){
@@ -24,48 +26,52 @@ async function save(next,message='保存しました'){
  status(result.error||'保存できませんでした');return false;
 }
 function element(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;}
-function button(text,fn){const b=element('button',text);b.type='button';b.onclick=fn;return b;}
+function button(text,fn){const b=element('button');i18n.text(b,text);b.type='button';b.onclick=fn;return b;}
+function translatedElement(tag,text){const node=element(tag);i18n.text(node,text);return node;}
 function renderLists(){
  $('task-count').textContent=state.tasks.filter(t=>t.done).length+'/'+state.tasks.length;
  const tasks=$('task-list');tasks.replaceChildren();
- if(!state.tasks.length)tasks.append(element('li','タスクはありません'));
+ if(!state.tasks.length)tasks.append(translatedElement('li','タスクはありません'));
  state.tasks.forEach(task=>{
-  const li=element('li'),label=element('label'),check=element('input');check.type='checkbox';check.checked=task.done;check.setAttribute('aria-label',task.text+'を完了');
+  const li=element('li'),label=element('label'),check=element('input');check.type='checkbox';check.checked=task.done;i18n.attr(check,'aria-label','{task}を完了',{task:task.text});
   const title=element('span',task.text,task.done?'done-text':'');label.append(check,title);li.append(label);
   check.onchange=async()=>{const next=clone(state),done=check.checked;next.tasks.find(t=>t.id===task.id).done=done;const ok=await save(next,done?'MISSION COMPLETE':'未完了へ戻しました');if(ok&&done&&root.dataset.motion==='normal'&&!matchMedia('(prefers-reduced-motion:reduce)').matches){const node=$('task-list').children[state.tasks.findIndex(t=>t.id===task.id)];node?.classList.add('task-finished');}if(!ok)check.checked=task.done;};
-  const actions=element('div',undefined,'row-actions');actions.append(button('編集',()=>{taskEdit=task.id;$('task-text').value=task.text;$('task-submit').textContent='更新';$('task-text').focus();}),button('削除',async()=>{const next=clone(state);next.tasks=next.tasks.filter(t=>t.id!==task.id);if(await save(next,'削除しました。元に戻せます')){undo=task;$('task-undo').hidden=false;}}));li.append(actions);tasks.append(li);
+  const actions=element('div',undefined,'row-actions');actions.append(button('編集',()=>{taskEdit=task.id;$('task-text').value=task.text;i18n.text($('task-submit'),'更新');$('task-text').focus();}),button('削除',async()=>{const next=clone(state);next.tasks=next.tasks.filter(t=>t.id!==task.id);if(await save(next,'削除しました。元に戻せます')){undo=task;$('task-undo').hidden=false;}}));li.append(actions);tasks.append(li);
  });
  const list=$('shortcut-list');list.replaceChildren();
- if(!state.shortcuts.length)list.append(element('li','ショートカットはありません'));
- state.shortcuts.forEach(link=>{const li=element('li');li.append(element('span',link.label,'list-title'));const actions=element('div',undefined,'row-actions');actions.append(button('開く',async()=>{if(busy)return;busy=true;const result=await request({action:'launch',id:link.id});busy=false;status(result.ok?'開きました':result.error);}),button('編集',()=>{linkEdit=link.id;$('shortcut-label').value=link.label;$('shortcut-path').value=link.path;$('shortcut-kind').value=link.kind;$('shortcut-submit').textContent='更新';}),button('削除',async()=>{const next=clone(state);next.shortcuts=next.shortcuts.filter(i=>i.id!==link.id);await save(next);}));li.append(actions);list.append(li);});
+ if(!state.shortcuts.length)list.append(translatedElement('li','ショートカットはありません'));
+ state.shortcuts.forEach(link=>{const li=element('li');li.append(element('span',link.label,'list-title'));const actions=element('div',undefined,'row-actions');actions.append(button('開く',async()=>{if(busy)return;busy=true;const result=await request({action:'launch',id:link.id});busy=false;status(result.ok?'開きました':result.error);}),button('編集',()=>{linkEdit=link.id;$('shortcut-label').value=link.label;$('shortcut-path').value=link.path;$('shortcut-kind').value=link.kind;i18n.text($('shortcut-submit'),'更新');}),button('削除',async()=>{const next=clone(state);next.shortcuts=next.shortcuts.filter(i=>i.id!==link.id);await save(next);}));li.append(actions);list.append(li);});
+ i18n.prune();
 }
-function clearTask(){taskEdit=null;$('task-form').reset();$('task-submit').textContent='追加';}
-function clearLink(){linkEdit=null;$('shortcut-form').reset();$('shortcut-submit').textContent='登録';}
+function clearTask(){taskEdit=null;$('task-form').reset();i18n.text($('task-submit'),'追加');}
+function clearLink(){linkEdit=null;$('shortcut-form').reset();i18n.text($('shortcut-submit'),'登録');}
 $('task-form').onsubmit=async e=>{e.preventDefault();const text=$('task-text').value.trim();if(!text)return;if(!taskEdit&&state.tasks.length>=100){status('タスクは100件までです');return;}const next=clone(state);if(taskEdit){const task=next.tasks.find(t=>t.id===taskEdit);if(!task){clearTask();return;}task.text=text;}else next.tasks.push({id:crypto.randomUUID(),text,done:false});if(await save(next))clearTask();};
 $('task-cancel').onclick=clearTask;
 $('task-undo').onclick=async()=>{if(!undo)return;const next=clone(state);if(next.tasks.length>=100){status('上限100件のため復元できません');return;}next.tasks.push(undo);if(await save(next,'復元しました')){undo=null;$('task-undo').hidden=true;}};
 $('shortcut-form').onsubmit=async e=>{e.preventDefault();const label=$('shortcut-label').value.trim(),path=$('shortcut-path').value.trim(),kind=$('shortcut-kind').value;if(!label||!path)return;if(!path.startsWith('/')&&!path.startsWith('~/')){status('絶対パスまたは ~/ から入力してください');return;}if(!linkEdit&&state.shortcuts.length>=24){status('ショートカットは24件までです');return;}const next=clone(state),item={id:linkEdit||crypto.randomUUID(),label,path,kind};if(linkEdit){const index=next.shortcuts.findIndex(t=>t.id===linkEdit);if(index<0){clearLink();return;}next.shortcuts[index]=item;}else next.shortcuts.push(item);if(await save(next))clearLink();};
 $('shortcut-cancel').onclick=clearLink;
 function effectForm(){const s=state.settings;$('battery-effects').checked=s.batteryEffects;$('particles-enabled').checked=s.particles;$('koi-enabled').checked=s.koi!==false;$('koi-palette').value=s.koiPalette||'rose';$('koi-power').checked=s.koiPower===true;$('koi-size').value=s.koiSize||100;$('koi-weight').value=s.koiWeight||100;$('energy-low').value=s.low;$('energy-mid').value=s.mid;$('desk-dock').value=s.dock;$('dock-reserve').value=s.reserve;}
-$('effects-form').onsubmit=async e=>{e.preventDefault();const low=Number($('energy-low').value),mid=Number($('energy-mid').value);if(!Number.isInteger(low)||!Number.isInteger(mid)||low<5||low>40||mid<low+5||mid>90){status('少ない残量は5〜40%、中程度はそれより5%以上高く90%以下にしてください');return;}const next=clone(state);next.settings={batteryEffects:$('battery-effects').checked,particles:$('particles-enabled').checked,koi:$('koi-enabled').checked,koiPalette:$('koi-palette').value,koiPower:$('koi-power').checked,koiSize:Number($('koi-size').value),koiWeight:Number($('koi-weight').value),low,mid,dock:$('desk-dock').value,reserve:Number($('dock-reserve').value)};await save(next);};
+$('display-language').onchange=async e=>{const next=clone(state);next.settings.language=e.target.value;$('display-language').disabled=true;try{await save(next);}finally{$('display-language').value=i18n.language;$('display-language').disabled=!ready||busy;}};
+$('effects-form').onsubmit=async e=>{e.preventDefault();const low=Number($('energy-low').value),mid=Number($('energy-mid').value);if(!Number.isInteger(low)||!Number.isInteger(mid)||low<5||low>40||mid<low+5||mid>90){status('少ない残量は5〜40%、中程度はそれより5%以上高く90%以下にしてください');return;}const next=clone(state);next.settings={...state.settings,batteryEffects:$('battery-effects').checked,particles:$('particles-enabled').checked,koi:$('koi-enabled').checked,koiPalette:$('koi-palette').value,koiPower:$('koi-power').checked,koiSize:Number($('koi-size').value),koiWeight:Number($('koi-weight').value),low,mid,dock:$('desk-dock').value,reserve:Number($('dock-reserve').value)};await save(next);};
 function motionOK(){return root.dataset.motion==='normal'&&!matchMedia('(prefers-reduced-motion:reduce)').matches&&!document.hidden;}
 function resources(data){
  latest=data;lastData=Date.now();const d=data?.disk,b=data?.battery;
- if(data && $('desk-status').textContent==='実測値の更新が止まっています')status('');
+ if(data && statusSource==='実測値の更新が止まっています')status('');
  const disk=d&&Number.isFinite(d.free)&&Number.isFinite(d.total)&&d.total>0&&d.free>=0&&d.free<=d.total?d:null;
  const battery=b&&Number.isFinite(b.percent)&&b.percent>=0&&b.percent<=100?b:null;
  for(const [name,value] of [['disk',disk?100*disk.free/disk.total:null],['battery',battery?.percent??null]]){
   $(name+'-percent').textContent=value===null?'—':Math.round(value)+'%';$(name+'-arc').style.strokeDasharray=(value??0)+' 100';$(name+'-bar').style.width=(value??0)+'%';
  }
- $('disk-detail').textContent=disk?(disk.free/2**30).toFixed(1)+' / '+(disk.total/2**30).toFixed(1)+' GiB':'取得待ち';
- const label=battery?(battery.charging?'充電中':battery.external?'電源接続':'バッテリー使用中'):'取得待ち';$('battery-detail').textContent=label;
- $('resource-source').textContent=native?(data?'LIVE / SSD・電源は5秒更新':'STALE / データ待ち'):'DEMO / SSD・電源は仮データ';
+ i18n.text($('disk-detail'),disk?(disk.free/2**30).toFixed(1)+' / '+(disk.total/2**30).toFixed(1)+' GiB':'取得待ち');
+ const label=battery?(battery.charging?'充電中':battery.external?'電源接続':'バッテリー使用中'):'取得待ち';i18n.text($('battery-detail'),label);
+ i18n.text($('resource-source'),native?(data?'LIVE / SSD・電源は5秒更新':'STALE / データ待ち'):'DEMO / SSD・電源は仮データ');
  if((lastBattery&&lastBattery!==label)||(lastDisk&&lastDisk!==(disk?'ok':'error'))){if(motionOK()){$('battery-card').classList.remove('changed');void $('battery-card').offsetWidth;$('battery-card').classList.add('changed');clearTimeout(pulseTimer);pulseTimer=setTimeout(()=>$('battery-card').classList.remove('changed'),750);}}
  lastBattery=label;lastDisk=disk?'ok':'error';
  if(data?.dock&&['bottom','left','right'].includes(data.dock.edge))automaticDock=data.dock;
  applySettings();
 }
 function applySettings(){
+ i18n.setLanguage(state.settings.language||'ja');$('display-language').value=i18n.language;$('display-language').disabled=!ready||busy;
  root.dataset.energy=energy(latest?.battery,state.settings);root.dataset.particles=String(state.settings.particles);root.dataset.koi=String(state.settings.koi!==false);root.dataset.koiPalette=state.settings.koiPalette||'rose';root.dataset.koiPower=String(state.settings.koiPower===true);root.dataset.koiSize=String(state.settings.koiSize||100);root.dataset.koiWeight=String(state.settings.koiWeight||100);
  if(native)post('desk-appearance',{settings:state.settings});
  updateBounds();window.dispatchEvent(new Event('cyberdeck-layout'));
@@ -152,7 +158,7 @@ renderLists();effectForm();applySettings();demo();$('desk-open').disabled=false;
 
 
 let desktopState=null;
-function renderDesktop(data){desktopState=data;const valid=data?.available===true;$('desktop-visibility').textContent=!native?'実機でのみ切り替えできます':!valid?'アイコン表示を確認できません':data.hidden?(data.owned?'鑑賞モード：アイコン非表示':'元の設定でアイコン非表示'):'通常表示：アイコン表示';$('view-hide').disabled=!native||!valid||busy||data.hidden;$('view-restore').disabled=!native||!valid||busy||!data.owned;}
+function renderDesktop(data){desktopState=data;const valid=data?.available===true;i18n.text($('desktop-visibility'),!native?'実機でのみ切り替えできます':!valid?'アイコン表示を確認できません':data.hidden?(data.owned?'鑑賞モード：アイコン非表示':'元の設定でアイコン非表示'):'通常表示：アイコン表示');$('view-hide').disabled=!native||!valid||busy||data.hidden;$('view-restore').disabled=!native||!valid||busy||!data.owned;}
 async function changeDesktop(operation){if(busy)return;busy=true;renderDesktop(desktopState);status('アイコン表示を切り替えています…');const result=await request({action:'desktop-mode',operation});busy=false;if(result.ok){renderDesktop(result.desktop);status(operation==='hide'?'鑑賞モードにしました':'元のアイコン表示へ戻しました');}else{renderDesktop(desktopState);status(result.error||'切り替えできませんでした');}}
 $('view-hide').onclick=()=>changeDesktop('hide');$('view-restore').onclick=()=>changeDesktop('restore');renderDesktop(null);
 

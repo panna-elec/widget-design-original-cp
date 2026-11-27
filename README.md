@@ -15,8 +15,9 @@ A macOS desktop widget with angular red frames, flowing koi light trails, a cloc
 | Feature | Description |
 | --- | --- |
 | Clock and calendar | Current time, date and monthly calendar |
-| System meters | CPU, memory, transfer rates and short CPU/network histories |
+| System meters | CPU, memory, transfer rates, detected connection types, per-type throughput and short histories |
 | Desk tools | SSD free space, power state, application/folder links and tasks |
+| Display language | Japanese/English for originally Japanese controls, sublabels, calendar and help; original English headings stay unchanged |
 | Layout | Collapsible, movable, resizable panels with saved placement and Dock awareness |
 | Themes | REFERENCE, CYBER and CLEAN; color palettes, startup, text and scan-line effects |
 | Power effects | Configurable battery thresholds, charging accents and particles |
@@ -26,17 +27,23 @@ A macOS desktop widget with angular red frames, flowing koi light trails, a cloc
 
 The koi SVG was drawn with reference to artwork panna-elec created using OpenAI image generation. Its source and licensing are documented in [ASSETS.md](ASSETS.md) and [LICENSE_SCOPE.md](LICENSE_SCOPE.md).
 
+Open **Desk / デスク → 表示言語 / Language** and select **日本語** or **English**. The selection applies immediately after a successful save and is retained after reload. Existing data defaults to Japanese; task text, link names and paths stay unchanged. The browser preview saves this choice separately from the installed widget. The outer preview page, command scripts and optional SketchyBar are outside this language setting.
+
+The language update has been installed locally and enabled. Japanese/English switching, saving and persistence after reload were verified through the running Übersicht engine; direct desktop WKWebView click testing remains unverified. See [validation details](VALIDATION.md#display-language-2026-11-27).
+
+Network connection labels use local macOS interface types and USB ancestry, without collecting Wi-Fi/device names or addresses. Wi-Fi tethering is shown as Wi-Fi; USB tethering and USB LAN adapters share the USB label. Multiple measured connections are combined, with per-type rates under Details / History. The display measures current traffic, not maximum connection speed. USB/wired hardware switching has not yet been tested on this Mac.
+
 ## Animation
 
 ### Koi light trails
 
-A roughly nine-second loop in REFERENCE / crimson, at 115% koi size and 130% stroke width.
+A roughly nine-second English-mode loop, re-recorded on 2026-11-27 in REFERENCE / crimson, at 115% koi size and 130% stroke width. The displayed metrics are simulated.
 
 ![Animated koi light trails, headings and frame](docs/media/koi-animation.gif)
 
 ### Panel controls
 
-Open the calendar and desk panel, enlarge and thicken the koi, save, then restore the earlier view. Some pauses are shortened.
+Re-recorded on 2026-11-27 in English using the current implementation and simulated data. Open Calendar and Desk (English selected), adjust and save the koi settings, then view the Wi-Fi connection label and per-type traffic under Details / History. The roughly 17-second loop shortens pauses between actions.
 
 ![Calendar, desk controls and koi settings](docs/media/panel-controls.gif)
 
@@ -45,7 +52,7 @@ Open the calendar and desk panel, enlarge and thicken the koi, save, then restor
 
 ![Koi settings with 130% size and 160% stroke width](docs/media/koi-settings.jpg)
 
-Open **デスク → 演出連動** (Desk → Effects), select options and press **設定を保存** (Save settings). Both controls retain the original 100% setting.
+In English mode, open **Desk → Effects**, select options and press **Save settings**. Both controls retain the original 100% setting.
 
 </details>
 
@@ -68,7 +75,7 @@ GIF resolution and frame rate are reduced for documentation. The preview Dock an
 | JavaScript / ES Modules | Controls, effects, state, hit testing and graphs |
 | JSX / Übersicht API | Widget rendering, five-second polling, shell commands and foreground/background integration |
 | SVG | Wallpaper, koi outlines, meters, light paths and panel masks |
-| Swift / Foundation / Darwin / IOKit | Local CPU, memory, network, power, disk and Dock measurements |
+| Swift / Foundation / Darwin / IOKit / SystemConfiguration | Local CPU, memory, network, power, disk and Dock measurements |
 | Python 3 | State validation, saving, conflict detection, preferences, viewing mode and metric aggregation; standard library only |
 | Bash / launchd | Installation, stopping, backups and optional bar sessions |
 | SketchyBar | Optional name and power banner; installed separately |

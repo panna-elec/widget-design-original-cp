@@ -18,7 +18,10 @@ function networkRate(previous, sample) {
   const valid = list => Array.isArray(list) && list.every(n => n && typeof n.id === 'string' &&
     Number.isSafeInteger(n.rxBytes) && n.rxBytes >= 0 && Number.isSafeInteger(n.txBytes) && n.txBytes >= 0) &&
     new Set(list.map(n => n.id)).size === list.length;
-  const unavailable = status => ({rx: null, tx: null, status});
+  const kinds=['wifi','wired','usb','bluetooth','cellular'];
+  const kind = port => kinds.includes(port.kind) ? port.kind : 'unknown';
+  const present = valid(sample.network) ? [...new Set(sample.network.map(kind))].sort() : [];
+  const unavailable = status => ({rx: null, tx: null, status,connections:present.map(kind=>({kind,rx:null,tx:null}))});
   if (!valid(sample.network)) return unavailable('unavailable');
   if (!sample.network.length) return unavailable('no-interface');
   if (!previous || !valid(previous.network)) return unavailable('waiting');
@@ -27,10 +30,14 @@ function networkRate(previous, sample) {
   if (!Number.isFinite(elapsed) || elapsed <= 0 || elapsed > 15 || wall <= 0 || wall > 15 || Math.abs(wall - elapsed) > 2) return unavailable('waiting');
   if (previous.network.length !== sample.network.length) return unavailable('waiting');
   let rx = 0, tx = 0;
+  const groups=new Map();
   for (const current of sample.network) {
     const before = previous.network.find(n => n.id === current.id);
-    if (!before || current.rxBytes < before.rxBytes || current.txBytes < before.txBytes) return unavailable('waiting');
-    rx += current.rxBytes - before.rxBytes; tx += current.txBytes - before.txBytes;
+    if (!before || kind(before)!==kind(current) || current.rxBytes < before.rxBytes || current.txBytes < before.txBytes) return unavailable('waiting');
+    const received=current.rxBytes-before.rxBytes, sent=current.txBytes-before.txBytes;
+    rx+=received;tx+=sent;
+    const type=kind(current),group=groups.get(type)||{kind:type,rx:0,tx:0};
+    group.rx+=received/elapsed;group.tx+=sent/elapsed;groups.set(type,group);
   }
-  return {rx: rx / elapsed, tx: tx / elapsed, status: 'ok'};
+  return {rx: rx / elapsed, tx: tx / elapsed, status: 'ok',connections:[...groups.values()].sort((a,b)=>a.kind.localeCompare(b.kind))};
 }

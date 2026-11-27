@@ -29,6 +29,7 @@
 
     <section class="network-card" aria-label="通信速度計">
       <div class="network-heading"><strong>NETWORK / I/O</strong><small>5秒平均</small></div>
+      <small id="network-connection">接続：データ待ち</small>
       <div class="network-row"><span>↓ RX / 受信</span><strong id="network-rx">—</strong></div>
       <div class="network-meter"><i id="network-rx-meter"></i></div>
       <div class="network-row"><span>↑ TX / 送信</span><strong id="network-tx">—</strong></div>
@@ -36,7 +37,7 @@
       <small id="network-state">計測待ち</small>
       <small id="network-scale">目盛りは通信量に合わせて自動調整</small>
     </section>
-    <div id="system-extra" class="detail-slot"><div class="detail-content"><p class="detail-caption">CPU HISTORY / 約3分</p><svg class="graph" viewBox="0 0 240 54" aria-label="CPU使用率の推移"><path class="grid" d="M0 12H240M0 32H240M0 52H240"/><polyline id="cpu-graph" points=""/></svg><p class="detail-caption">NETWORK HISTORY / 約3分</p><svg class="graph network-graph" viewBox="0 0 240 54" aria-label="受信は赤、送信は白の通信速度履歴"><path class="grid" d="M0 12H240M0 32H240M0 52H240"/><polyline id="network-rx-graph" points=""/><polyline id="network-tx-graph" points=""/></svg><p class="detail-copy">通信はWi-Fi・Ethernet（en系）の合計。LAN内通信を含みます。赤は受信、白は送信。目盛りは自動調整で、回線の使用率ではありません。KiB/sは1024バイト/秒です。</p><p class="detail-copy">CPUは全コアの平均。メモリはActive＋Wired＋Compressedの概算です。5秒ごとに更新します。</p></div></div>
+    <div id="system-extra" class="detail-slot"><div class="detail-content"><p class="detail-caption">CPU HISTORY / 約3分</p><svg class="graph" viewBox="0 0 240 54" aria-label="CPU使用率の推移"><path class="grid" d="M0 12H240M0 32H240M0 52H240"/><polyline id="cpu-graph" points=""/></svg><p class="detail-caption">NETWORK HISTORY / 約3分</p><p id="connection-rates" class="detail-copy"></p><svg class="graph network-graph" viewBox="0 0 240 54" aria-label="受信は赤、送信は白の通信速度履歴"><path class="grid" d="M0 12H240M0 32H240M0 52H240"/><polyline id="network-rx-graph" points=""/><polyline id="network-tx-graph" points=""/></svg><p class="detail-copy">計測対象の接続方式を表示します。複数接続時は通信量を合計し、内訳を詳細に表示します。Wi-FiテザリングもWi-Fi、USBテザリングやUSB有線LANはUSB接続です。判別できない接続は判別不可と表示します。LAN内通信も含み、回線の最高速度ではありません。赤は受信、白は送信。KiB/sは1024バイト/秒です。</p><p class="detail-copy">CPUは全コアの平均。メモリはActive＋Wired＋Compressedの概算です。5秒ごとに更新します。</p></div></div>
     </div></div>
   </section>
   <section class="hud desk-panel" aria-label="デスクツール" hidden>
@@ -46,6 +47,7 @@
       <button role="tab" data-desk-tab="layout" aria-selected="false">配置</button><button role="tab" data-desk-tab="effects" aria-selected="false">演出連動</button>
     </div>
     <div class="desk-scroll">
+      <label class="language-control">表示言語 / Language<select id="display-language" aria-label="表示言語 / Language" disabled><option value="ja">日本語</option><option value="en">English</option></select></label>
       <div data-desk-page="resources">
         <div class="resource-grid">
           <div class="resource" id="disk-card"><small>SSD / 空き</small><svg viewBox="0 0 44 44" aria-hidden="true"><circle class="track" cx="22" cy="22" r="18"/><circle class="fill" id="disk-arc" cx="22" cy="22" r="18" pathLength="100"/></svg><strong id="disk-percent">—</strong><div class="segbar"><i id="disk-bar"></i></div><small id="disk-detail">取得待ち</small></div>
@@ -72,4 +74,4 @@
   </section>
   <div class="finder preview-only" hidden><div class="finder-title"><span class="lights"><i></i><i></i><i></i></span><b>Finder — 配置確認用</b></div><div class="finder-body"><aside>よく使う項目<br><br>最近の項目<br><br>アプリケーション<br><br>デスクトップ</aside><div><span>▰<small>Documents</small></span><span>▰<small>Pictures</small></span><span>▰<small>Projects</small></span><p>通常のアプリの見た目はそのまま</p></div></div></div>
   <div class="dock preview-only" aria-hidden="true"><i>⌘</i><i>◉</i><i>✉</i><i>▤</i><i>♫</i><i>⚙</i></div>
-</main><script src="boot-sequence.js"></script><script src="surface.js"></script><script src="interactions.js?v=pointer-1"></script><script src="signal-effects.js?v=tools-2"></script><script type="module" src="ambient.js?v=koi-size-1"></script><script type="module" src="desk.js?v=koi-size-1"></script></body></html>
+</main><script src="i18n.js"></script><script src="boot-sequence.js"></script><script src="surface.js"></script><script src="interactions.js?v=pointer-1"></script><script src="signal-effects.js?v=tools-2"></script><script type="module" src="ambient.js?v=koi-size-1"></script><script type="module" src="desk.js?v=koi-size-1"></script></body></html>

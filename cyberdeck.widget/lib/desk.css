@@ -53,3 +53,9 @@
 
 .desk-focus .clock-panel{visibility:hidden}
 #surface[data-layout=left] .reference-dashboard{display:none}
+
+/* Language selection remains available on every desk tab. */
+.desk-panel .language-control{margin:0 0 10px;padding-bottom:9px;border-bottom:1px solid #68708055}
+.desk-tabs button,.desk-actions button{overflow-wrap:anywhere;min-width:0}
+
+#connection-rates{white-space:pre-line;overflow-wrap:anywhere}

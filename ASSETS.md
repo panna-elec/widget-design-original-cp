@@ -1,6 +1,6 @@
 # 素材と実行環境の出所
 
-現在の条件: 独自コードと組み込みの鯉SVGはGPL-3.0-or-later、独立画像はCC BY 4.0。[対象表](LICENSE_SCOPE.md)を参照してください。以下の制作経緯にある「未設定」は当時の記録です。素材台帳は既存45件と今回のライセンス関連7件の計52件です。
+現在の条件: 独自コードと組み込みの鯉SVGはGPL-3.0-or-later、独立画像はCC BY 4.0。[対象表](LICENSE_SCOPE.md)を参照してください。以下の制作経緯にある「未設定」は当時の記録です。素材台帳は言語切替モジュールを含め計53件です。
 
 - wallpaper.svg / wallpaper.png：今回コードで新規制作した幾何学的な街並み。SVG原本を@resvg/resvg-jsで2560×1600 PNGへ変換。画像生成モデルの出力ではありません。
 - preview / widget / Stats.swift / scripts：今回の独自実装。参考リポジトリからの素材・コードのコピーなし。SVGとPNGは同一素材IDで管理。
@@ -99,3 +99,8 @@ CyberKDEは任意の制作参照記録として保持する。2026-11-27の固�
 ## ユーザー承認によるライセンス適用（2026-11-27）
 
 独自コード・付随する独自文書・koi.js内の鯉SVGをGPL-3.0-or-laterで許諾。独立した壁紙3種（SVGとPNG）とREADMEのJPEG2枚・GIF2本はCC BY 4.0。名義はpanna-elec、許諾できる権利の範囲で適用。フォントOFL・Devicon MIT・商標条件は保持。ここより前の「未設定」「未付与」は選択前の履歴であり、現在は[LICENSE_SCOPE.md](LICENSE_SCOPE.md)を優先する。画像・フォント・壁紙本体は変更していない。GitHub送信・公開・実機更新なし。
+
+
+## Language, connection types and English media refresh (2026-11-27)
+
+英語・日本語切替モジュールi18n.jsは独自コードとしてGPL-3.0-or-laterの対象。新しい外部素材は追加していない。接続分類はmacOS SystemConfigurationとIOKitを使用。README媒体4点を最新の英語プレビューで撮り直し、従来と同じCC BY 4.0対象パスを差し替えた。計53件の素材台帳ハッシュを更新。撮影・符号化条件はdocs/media/README.mdを参照。
